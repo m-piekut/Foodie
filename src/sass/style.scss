@@ -1,0 +1,139 @@
+$orange-color: #FF7D00;
+$green-color: #15616D;
+
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 62.5%;
+    scroll-behavior: smooth;
+}
+
+.h1 {
+    position: relative;
+    font-size: 6.4rem;
+    font-weight: bold;
+    text-shadow:
+        -2.5px -2.5px 0 #fff,
+        2.5px -2.5px 0 #fff,
+        -2.5px 2.5px 0 #fff,
+        2.5px 2.5px 0 #fff;
+        &::after, &::before{
+            content: '';
+            width: 70%;
+            height: 4px;
+            background-color: $orange-color;
+            position: absolute;
+            bottom: 2px;
+            left: 30px;
+        }
+        &::before{
+            bottom: 10px;
+        }
+}
+
+.header {
+    position: relative;
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-image: url("../img/home_image.jpg");
+    padding-left: 12px;
+
+
+    &__p {
+        margin-top: -10px;
+        margin-left: 16px;
+        font-size: 2.1rem;
+        font-weight: bold;
+        text-shadow:
+            -1px -1px 0 #fff,
+            1px -1px 0 #fff,
+            -1px 1px 0 #fff,
+            1px 1px 0 #fff;
+    }
+}
+
+.loginBtn {
+    position: absolute;
+    width: 121px;
+    height: 32px;
+    right: 18px;
+    bottom: 27px;
+    font-size: 1.7rem;
+    font-weight: bold;
+    background: $orange-color;
+    border-radius: 13px;
+    border: none;
+    cursor: pointer;
+    &:hover{
+        background-color: #fa8e29;
+    }
+}
+
+.main{
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-image: url('../img/food-1932466_640.jpg');
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .form-wrapper{
+        width: 90%;
+        height: 90%;
+        background-color: rgba(254, 243, 233, .8);
+        border: $orange-color 4px solid;
+        border-radius: 20px;
+        .h1{
+            margin-left: .3em;
+            margin-top: .3em;
+        }
+        .login-form,.singup-wrapper{
+            margin: .3em auto;
+            
+            margin-top: 58px;
+            width: 70%;
+        &__label{
+            display: block;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: left;
+            margin-left: 8px;
+            &--pass{
+                margin-top: 2em;
+            }
+        }
+        &__input{
+            background-color: $green-color;
+            //sdsd
+            border: none;
+            height: 4.6rem;
+            width: 100%;
+            border-radius: 27px;
+            padding: 10px;
+            color: $orange-color;
+            font-weight: bold;
+        }
+        }
+        .loginBtn{
+            position: initial;
+            margin-top: 10px ;
+        }
+        .singup-wrapper{
+            text-align: center;
+            p{
+                font-size: 1.2rem;
+                font-weight: bold;
+            }
+        }
+    }
+}
