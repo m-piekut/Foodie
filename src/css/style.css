@@ -65,7 +65,7 @@ html {
 }
 
 .loginBtn:hover {
-  background-color: #fa8e29;
+  background-color: #f89a42;
 }
 
 .main {
@@ -133,5 +133,11 @@ html {
 .main .form-wrapper .singup-wrapper p {
   font-size: 1.2rem;
   font-weight: bold;
+}
+
+.obrazek {
+  width: 100px;
+  height: 100px;
+  background-image: url("../img/avatar-example.jpg");
 }
 /*# sourceMappingURL=style.css.map */

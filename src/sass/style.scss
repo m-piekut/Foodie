@@ -74,7 +74,7 @@ html {
     border: none;
     cursor: pointer;
     &:hover{
-        background-color: #fa8e29;
+        background-color: #f89a42;
     }
 }
 
@@ -136,4 +136,9 @@ html {
             }
         }
     }
+}
+.obrazek{
+    width: 100px;
+    height: 100px;
+    background-image: url('../img/avatar-example.jpg');
 }
