@@ -2,6 +2,7 @@ $orange-color: #FF7D00;
 $green-color: #15616D;
 $light-color: #FFECD1;
 
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
 
 *,
 *::before,
@@ -12,9 +13,15 @@ $light-color: #FFECD1;
 }
 
 html {
+    font-family: "Quicksand";
     font-size: 62.5%;
     scroll-behavior: smooth;
 }
+
+.fawsome {
+    font-family: 'Roboto', sans-serif;
+}
+
 
 .h1 {
     position: relative;
