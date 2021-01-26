@@ -8,26 +8,28 @@ const ProfileSite = () => {
     
     return ( 
         (user && <div className="user-profile">
-            <h3>{user.qute}</h3>
+            <p className="user-profile-quote">{user.quote}</p>
             <div className="user-info">
-                <img src="https://warsztatauto.files.wordpress.com/2015/06/avatar.gif" alt=""/>
+                <img className="user-info__image" src="https://warsztatauto.files.wordpress.com/2015/06/avatar.gif" alt=""/>
                 <div className="user-info__personal">
+                    <div className="user-info__personal-upper">
                     <p>{user.name}</p>
                     <div className="user-info__emotes">
-                        <div className="info__emotes-item">
-                            <i className="far fa-grin-tongue"></i>
-                            {user.likes}
+                        <div className="user-info__emotes-item">
+                            <i className="far fa-grin-tongue "></i>
+                            <p>{user.likes}</p>
                         </div>
-                        <div className="info__emotes-item">
+                        <div className="user-info__emotes-item">
                             <i className="fas fa-utensils"></i>
-                            {user.dinners}
+                            <p>{user.dinners}</p>
                         </div>
                     </div>
-
+                    </div>
+                    <p className="user-info__personal-description">{user.description}</p>
                 </div>
                             <i className="fas fa-utensils"></i>
             </div>
-            <div className="images-box">
+            <div className="user-profile__images-box">
                 {user.images.map((image)=>(
                     <img src={image.source} alt=""  key={image.id}/>
                 ))}

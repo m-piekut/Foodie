@@ -140,4 +140,79 @@ html {
   height: 100px;
   background-image: url("../img/avatar-example.jpg");
 }
+
+.user-profile {
+  width: 100vw;
+}
+
+.user-profile-quote {
+  font-size: 2rem;
+  font-weight: 100;
+  font-style: italic;
+}
+
+.user-profile .user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #15616D;
+}
+
+.user-profile .user-info__image {
+  width: 165px;
+  height: 100px;
+  border-radius: 55px;
+}
+
+.user-profile .user-info__personal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-profile .user-info__personal-upper {
+  font-size: 1.4rem;
+  width: 165px;
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+}
+
+.user-profile .user-info__personal-description {
+  width: 80%;
+  margin-top: 15px;
+  margin-bottom: 40px;
+  color: #FFECD1;
+  font-weight: bold;
+  text-align: center;
+}
+
+.user-profile .user-info__emotes {
+  display: flex;
+  justify-content: space-between;
+  width: 30%;
+}
+
+.user-profile .user-info__emotes-item {
+  display: flex;
+  margin-right: 5px;
+}
+
+.user-profile .user-info__emotes-item p {
+  margin-left: 3px;
+}
+
+.user-profile__images-box {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-profile__images-box img {
+  width: 314px;
+  height: 230px;
+  margin-bottom: 5px;
+  border: 1px solid black;
+}
 /*# sourceMappingURL=style.css.map */
