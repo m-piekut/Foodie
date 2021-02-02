@@ -10,7 +10,6 @@ const useFetch = (url) => {
 
         const aboartCont = new AbortController()
 
-        console.log('use efect ran')
         fetch(url, { signal: aboartCont.signal})
             .then(res => {
                 if(!res.ok){
@@ -20,15 +19,12 @@ const useFetch = (url) => {
                 return res.json()
             })
             .then((data)=>{
-                console.log(data)
                 setData(data)
                 setIsPending(false)
             })
             .catch(err=>{
                 if(err.name === 'AboartError') {
-                    console.log('fetch aboart')
                 }else{
-                    console.log('zjebało się')
                     setError(err.message);
                 }
             })

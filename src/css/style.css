@@ -7,6 +7,11 @@
   padding: 0;
 }
 
+a {
+  text-decoration: none;
+  color: black;
+}
+
 html {
   font-family: "Quicksand";
   font-size: 62.5%;
@@ -15,6 +20,33 @@ html {
 
 .fawsome {
   font-family: 'Roboto', sans-serif;
+}
+
+.avatar {
+  width: 30px;
+  height: 25px;
+  border-radius: 50%;
+}
+
+.join {
+  color: #FF7D00;
+  font-size: 1.6rem;
+}
+
+.primary-btn {
+  font-style: 1.2rem;
+  padding: 3px 10px;
+  background-color: #FF7D00;
+  border: none;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color .3s;
+}
+
+.primary-btn:hover {
+  background-color: #f89a42;
 }
 
 .h1 {
@@ -220,5 +252,149 @@ html {
   height: 230px;
   margin-bottom: 5px;
   border: 1px solid black;
+}
+
+.dinner-list {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.dinner-list__header {
+  margin: .7em;
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.dinner-list__box {
+  font-weight: bold;
+  margin-top: 5px;
+  padding: 1em 2em;
+  padding-bottom: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-bottom: 1px solid #DDDCDC;
+  cursor: pointer;
+}
+
+.dinner-list__box:hover {
+  background-color: rgba(241, 241, 241, 0.212);
+}
+
+.dinner-list__up, .dinner-list__down {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.dinner-list__city {
+  font-size: 2rem;
+}
+
+.dinner-list__place {
+  font-size: 1.2rem;
+}
+
+.dinner-list__address {
+  font-size: 1rem;
+}
+
+.dinner-list__date {
+  font-size: 1rem;
+}
+
+.dinner-list__avatars {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.dinner-info {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.dinner-info__city {
+  font-size: 3rem;
+  margin-top: 38px;
+}
+
+.dinner-info__date {
+  font-size: 1.5rem;
+}
+
+.dinner-info__name {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.dinner-info__address {
+  font-size: 1.4rem;
+}
+
+.dinner-info__about {
+  margin: 20px auto;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.dinner-info__header {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.dinner-info__user-box {
+  display: flex;
+  position: relative;
+  width: 90%;
+  background-color: #f89a42;
+  margin: 4px auto;
+}
+
+.dinner-info__avatar {
+  position: relative;
+  left: -15px;
+  width: 40px;
+  height: 40px;
+}
+
+.dinner-info__user-name {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin: 0 auto;
+}
+
+.new-dinner {
+  background-color: #15616D;
+  width: 100%;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.new-dinner h3 {
+  font-size: 2rem;
+}
+
+.new-dinner label {
+  font-size: 1.2rem;
+  margin-right: 10px;
+}
+
+.new-dinner__input {
+  color: grey;
+  font-weight: bold;
+  opacity: 1;
+  font-size: 1.2rem;
+  width: 90%;
+  background-color: #FFECD1;
+  margin: 5px auto;
+  display: flex;
+  justify-content: space-between;
 }
 /*# sourceMappingURL=style.css.map */

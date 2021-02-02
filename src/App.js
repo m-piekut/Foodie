@@ -7,6 +7,7 @@ import ProfileSite from './ProfileSite/ProfileSite';
 import DinnersList from './Dinners/DinnersList';
 import DinnerInfo from './Dinners/DinnerInfo';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import MakeDinner from './MakeDinner';
 
 function App() {
   return (
@@ -19,7 +20,8 @@ function App() {
         <Route  exact path='/users'><ProfileList/></Route>
         <Route  path='/users/:id'><ProfileSite/></Route>
         <Route  exact path='/dinners'><DinnersList/></Route>
-        {/* <Route  path='/diners/:id'><DinerInfo/></Route> */}
+        <Route  path='/dinners/:id'><DinnerInfo/></Route>
+        <Route  path='/make'><MakeDinner/></Route>
       </Switch>
     </div>
     </Router>
