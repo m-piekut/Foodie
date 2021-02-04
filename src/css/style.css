@@ -53,7 +53,10 @@ html {
   position: relative;
   font-size: 6.4rem;
   font-weight: bold;
-  text-shadow: -2.5px -2.5px 0 #fff, 2.5px -2.5px 0 #fff, -2.5px 2.5px 0 #fff, 2.5px 2.5px 0 #fff;
+  text-shadow: -2.5px -2.5px 0 #fff,
+ 2.5px -2.5px 0 #fff,
+ -2.5px 2.5px 0 #fff,
+ 2.5px 2.5px 0 #fff;
 }
 
 .h1::after, .h1::before {
@@ -68,6 +71,12 @@ html {
 
 .h1::before {
   bottom: 10px;
+}
+
+.App__signUp {
+ display: flex;
+ flex-direction: column;
+ 
 }
 
 .header {
@@ -85,7 +94,10 @@ html {
   margin-left: 16px;
   font-size: 2.1rem;
   font-weight: bold;
-  text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+  text-shadow: -1px -1px 0 #fff,
+ 1px -1px 0 #fff,
+ -1px 1px 0 #fff,
+ 1px 1px 0 #fff;
 }
 
 .loginBtn {

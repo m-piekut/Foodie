@@ -73,7 +73,13 @@ html {
             bottom: 10px;
         }
 }
+.App__signUp{
 
+        display: flex;
+        flex-direction: column;
+        font-size: 29px;
+    
+}
 .header {
     position: relative;
     height: 100vh;
