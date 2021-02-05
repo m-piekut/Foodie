@@ -1,10 +1,35 @@
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import useFetch from "../Components/useFetch";
+import {db} from '../firebase'
 
 const DinnerInfo = () => {
 
     const {id} = useParams();
-    const {data : dinner, isPending, error} = useFetch('http://localhost:8000/dinners/'+ id)
+    const [dinner, setDinner]  = useState([])
+    const [invited, setInvited]  = useState([])
+    
+    useEffect(()=>{
+    var docRef = db.collection("diners").doc(id);
+
+    const test = docRef.collection("invited").onSnapshot(snapshot =>{
+        setInvited(snapshot.docs.map(doc => doc.data()))
+    })
+    console.log(invited)
+docRef.get().then((doc) => {
+    if (doc.exists) {
+        console.log("Document data:", doc.data());
+        setDinner(doc.data())
+    } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+    }
+
+}).catch((error) => {
+    console.log("Error getting document:", error);
+});
+    
+},[])
+
 
 
     return ( 
@@ -18,11 +43,11 @@ const DinnerInfo = () => {
         </div>
 
         <h4 className="dinner-info__header">Uczestnicy:</h4>
-        {dinner['invited-users'] && <div className="dinner-info__box">
-            {dinner['invited-users'].map(user =>(
+        {invited && <div className="dinner-info__box">
+            {invited.map(user =>(
                 <div className="dinner-info__user-box" key={user.id}>
                     <img src={user.avatar} alt="" className="dinner-info__avatar avatar"/>
-                    <p className="dinner-info__user-name">{user['user-name']}</p>
+                    <p className="dinner-info__user-name">{user.username}</p>
                 </div>
             ))}
         </div>}

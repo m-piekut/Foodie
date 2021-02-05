@@ -11,7 +11,11 @@ const DinnersList = () => {
 useEffect(() => {
    const test =  db.collection('diners').onSnapshot(snapshot=>{
 
-       setDinners(snapshot.docs.map(doc => doc.data()))
+       setDinners(snapshot.docs.map(doc => ({
+        id : doc.id,
+        dinner: doc.data()
+
+        })))
    });
 
 }, []);
@@ -20,13 +24,14 @@ useEffect(() => {
         (dinners &&<div className="dinner-list">
             <h3 className="dinner-list__header">Lista uczt:</h3>
             {
-                dinners.map(dinner => (
+                dinners.map(({id, dinner}) => (
+                    <Link to={`/dinners/${id}`}>
+                    <Dinner city={dinner.city} date={dinner.date} time={dinner.time} address={dinner.address} name={dinner.name} key={id} dinnerId = {id}></Dinner>
+                    </Link>
+
                     
 
-                    <Dinner city={dinner.city} date={dinner.date} time={dinner.time} address={dinner.address} name={dinner.name} key={dinner.id}></Dinner>
-
-
-                ))
+        ))
             }
             {/* <MakeDinner></MakeDinner> */}
         </div>)

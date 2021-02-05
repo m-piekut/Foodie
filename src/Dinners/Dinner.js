@@ -1,4 +1,4 @@
-const Dinner = ({name, address, date,time, city}) => {
+const Dinner = ({name, address, date,time, city, dinnerId}) => {
     return (
           <div className="dinner-list__box" >
                         <div className="dinner-list__up">
