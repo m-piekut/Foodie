@@ -33,7 +33,7 @@ useEffect(() => {
 
         ))
             }
-            {/* <MakeDinner></MakeDinner> */}
+            <MakeDinner></MakeDinner>
         </div>)
     );
 }

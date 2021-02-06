@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-
+import {db} from './firebase'
 const MakeDinner = () => {
     const currentTime = new Date()
     const [type, setType] = useState('')
@@ -18,33 +18,34 @@ const MakeDinner = () => {
         e.preventDefault()
         const dinner = {type, city, name, address, date, time};
         console.log(dinner)
-
-        fetch('http://localhost:8000/dinners',{
-            method: 'POST',
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(dinner)
-        }).then(()=>{
-            console.log('new dinner added')
+        
+        db.collection('diners').add({
+            city: city,
+            address: address,
+            name: name,
+            date: date,
+            time: time,
         })
+        .then((docRef) => {
+            console.log("Document written with ID: ", docRef.id);
+        })
+        .catch((error) => {
+            console.error("Error adding document: ", error);
+        });
 
     }
     return ( 
         <div className="make-dinner">
-            {/* <p>{type}</p>
-            <p>{city}</p>
-            <p>{name}</p>
-            <p>{address}</p>
-            <p>{date}</p>
-            <p>{time}</p> */}
+
 
             <form className="new-dinner" onSubmit={(e)=>handleSubmit(e)}>
             <h3>Stwórz ucztę</h3>
-                <div className="new-dinner__location-box">
+                {/* <div className="new-dinner__location-box">
                 <input type="radio" name="location" id="yours" value="yours"  onClick={()=> setType("yours")}/>
                 <label htmlFor="yours">Twoje miejsce</label>
                 <input type="radio" name="location" id="local" value="local"  onClick={()=> setType("local")} />
                 <label htmlFor="local">Lokal</label>
-                </div>
+                </div> */}
                 <input className="new-dinner__input new-dinner__input--city"
                 type="text" placeholder="Miasto" 
                 value={city} 
