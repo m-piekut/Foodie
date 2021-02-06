@@ -86,7 +86,7 @@ const Header = () => {
     return ( 
         <div className="signup">
             {user&& <p>{user.displayName}</p>}
-    <Modal
+    <Modal className="modal"
         open={open}
         onClose={()=> setOpen(false)}
     >
@@ -140,8 +140,8 @@ const Header = () => {
           </form>
           </center>
         </div>
-
       </Modal>
+      
     <Button onClick={()=> setOpen(true)}>Sign Up</Button>
     <Button onClick={()=> setOpenLogin(true)}>LOGIN</Button>
         </div>

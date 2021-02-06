@@ -7,12 +7,15 @@ const DinnerInfo = () => {
     const {id} = useParams();
     const [dinner, setDinner]  = useState([])
     const [invited, setInvited]  = useState([])
-    
+
+
     useEffect(()=>{
     var docRef = db.collection("diners").doc(id);
 
-    const test = docRef.collection("invited").onSnapshot(snapshot =>{
-        setInvited(snapshot.docs.map(doc => doc.data()))
+    docRef.collection("invited").onSnapshot(snapshot =>{
+        setInvited(snapshot.docs.map(doc =>({ 
+            id: doc.id,
+            invitedUser: doc.data()})))
     })
     console.log(invited)
 docRef.get().then((doc) => {
@@ -44,10 +47,10 @@ docRef.get().then((doc) => {
 
         <h4 className="dinner-info__header">Uczestnicy:</h4>
         {invited && <div className="dinner-info__box">
-            {invited.map(user =>(
-                <div className="dinner-info__user-box" key={user.id}>
-                    <img src={user.avatar} alt="" className="dinner-info__avatar avatar"/>
-                    <p className="dinner-info__user-name">{user.username}</p>
+            {invited.map(({id, invitedUser}) =>(
+                <div className="dinner-info__user-box" key={id}>
+                    <img src={invitedUser.avatar} alt="" className="dinner-info__avatar avatar"/>
+                    <p className="dinner-info__user-name">{invitedUser.username}</p>
                 </div>
             ))}
         </div>}

@@ -50,7 +50,14 @@ html {
         background-color: #f89a42;
     }
 }
+.signup{
+    background-color: $orange-color;
+   
+    }
 
+.makeStyles-paper-1{
+    max-width: 300px;  
+}
 .h1 {
     position: relative;
     font-size: 6.4rem;
@@ -282,6 +289,8 @@ html {
 
     &__city{
         font-size: 2rem;
+        
+
     }
     &__place{
         font-size: 1.2rem;
@@ -290,6 +299,7 @@ html {
         font-size: 1rem;
     }
     &__date{
+        color: $orange-color;
         font-size: 1rem;
     }
     &__avatars{

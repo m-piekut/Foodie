@@ -49,14 +49,19 @@ html {
   background-color: #f89a42;
 }
 
+.signup {
+  background-color: #FF7D00;
+}
+
+.makeStyles-paper-1 {
+  max-width: 300px;
+}
+
 .h1 {
   position: relative;
   font-size: 6.4rem;
   font-weight: bold;
-  text-shadow: -2.5px -2.5px 0 #fff,
- 2.5px -2.5px 0 #fff,
- -2.5px 2.5px 0 #fff,
- 2.5px 2.5px 0 #fff;
+  text-shadow: -2.5px -2.5px 0 #fff, 2.5px -2.5px 0 #fff, -2.5px 2.5px 0 #fff, 2.5px 2.5px 0 #fff;
 }
 
 .h1::after, .h1::before {
@@ -74,9 +79,9 @@ html {
 }
 
 .App__signUp {
- display: flex;
- flex-direction: column;
- 
+  display: flex;
+  flex-direction: column;
+  font-size: 29px;
 }
 
 .header {
@@ -94,10 +99,7 @@ html {
   margin-left: 16px;
   font-size: 2.1rem;
   font-weight: bold;
-  text-shadow: -1px -1px 0 #fff,
- 1px -1px 0 #fff,
- -1px 1px 0 #fff,
- 1px 1px 0 #fff;
+  text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
 }
 
 .loginBtn {
@@ -314,6 +316,7 @@ html {
 }
 
 .dinner-list__date {
+  color: #FF7D00;
   font-size: 1rem;
 }
 
