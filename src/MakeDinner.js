@@ -40,7 +40,7 @@ const MakeDinner = () => {
         })
         .then((docRef) => {
             console.log("Document written with ID: ", docRef.id);
-            db.collection('diners').doc(docRef.id).collection("invited").add({
+            db.collection('diners').doc(docRef.id).collection("dinnerMaker").add({
                 avatar: "https://www.w3schools.com/howto/img_avatar.png",
                 username: currentUser
             })

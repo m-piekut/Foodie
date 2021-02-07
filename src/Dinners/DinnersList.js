@@ -3,22 +3,28 @@ import { Link } from "react-router-dom";
 import Join from "../Components/Join";
 import useFetch from "../Components/useFetch";
 import MakeDinner from "../MakeDinner";
-import {db} from '../firebase'
+import {db, auth} from '../firebase'
 import Dinner from "./Dinner";
 const DinnersList = () => {
 
     const [dinners, setDinners] = useState([])
     const [avatars, setAvatars] = useState([])
+    const [currentUser, setCurrentUser] = useState(null);
 useEffect(() => {
    const test =  db.collection('diners').onSnapshot(snapshot=>{
-
        setDinners(snapshot.docs.map(doc => ({
         id : doc.id,
         dinner: doc.data()
 
         })))
    });
-
+   auth.onAuthStateChanged(user => {
+    if (user) {
+      setCurrentUser(user.displayName)
+    } else {
+      setCurrentUser(null)
+    }
+  });
 }, []);
 
     return ( 
@@ -34,7 +40,8 @@ useEffect(() => {
 
         ))
             }
-            <MakeDinner></MakeDinner>
+            {currentUser ? <MakeDinner/>: false}
+            
         </div>)
     );
 }

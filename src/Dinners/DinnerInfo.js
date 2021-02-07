@@ -7,11 +7,17 @@ const DinnerInfo = () => {
     const {id} = useParams();
     const [dinner, setDinner]  = useState([])
     const [invited, setInvited]  = useState([])
+    const [dinnerMaker, setDinnerMaker]  = useState([])
 
 
     useEffect(()=>{
     var docRef = db.collection("diners").doc(id);
-
+    var docRefToDinnerMaker = db.collection('diners').doc(id).collection("dinnerMaker")
+        docRefToDinnerMaker.onSnapshot(snapshot =>{
+            setDinnerMaker(snapshot.docs.map(doc=> ({
+                maker: doc.data(),
+                id: doc.id})))
+        })
     docRef.collection("invited").onSnapshot(snapshot =>{
         setInvited(snapshot.docs.map(doc =>({ 
             id: doc.id,
@@ -47,6 +53,13 @@ docRef.get().then((doc) => {
 
         <h4 className="dinner-info__header">Uczestnicy:</h4>
         {invited && <div className="dinner-info__box">
+            
+            {dinnerMaker.map(({maker, id}) =>(
+                <div className="dinner-info__user-box" key={id}>
+                    <img src={maker.avatar} alt="" className="dinner-info__avatar avatar"/>
+                    <p className="dinner-info__user-name">{maker.username}</p>
+                </div>
+            ))}
             {invited.map(({id, invitedUser}) =>(
                 <div className="dinner-info__user-box" key={id}>
                     <img src={invitedUser.avatar} alt="" className="dinner-info__avatar avatar"/>
