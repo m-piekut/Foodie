@@ -61,12 +61,7 @@ const MakeDinner = () => {
 
             <form className="new-dinner" onSubmit={(e)=>handleSubmit(e)}>
             <h3>Stwórz ucztę</h3>
-                {/* <div className="new-dinner__location-box">
-                <input type="radio" name="location" id="yours" value="yours"  onClick={()=> setType("yours")}/>
-                <label htmlFor="yours">Twoje miejsce</label>
-                <input type="radio" name="location" id="local" value="local"  onClick={()=> setType("local")} />
-                <label htmlFor="local">Lokal</label>
-                </div> */}
+             
                 <input className="new-dinner__input new-dinner__input--city"
                 type="text" placeholder="Miasto" 
                 required

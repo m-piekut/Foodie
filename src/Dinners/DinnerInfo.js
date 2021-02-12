@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import {db} from '../firebase'
+import {auth, db} from '../firebase'
 
 const DinnerInfo = () => {
 
@@ -8,9 +8,23 @@ const DinnerInfo = () => {
     const [dinner, setDinner]  = useState([])
     const [invited, setInvited]  = useState([])
     const [dinnerMaker, setDinnerMaker]  = useState([])
+    const [currentUser, setCurrentUser] =useState(null);
 
+    const addInvited = ()=>{
+        const test = db.collection('diners').doc(id).collection("invited").add({
+            avatar: "https://www.w3schools.com/howto/img_avatar.png",
+            username: currentUser
+        })
+    }
 
     useEffect(()=>{
+        auth.onAuthStateChanged(user => {
+        if (user) {
+            setCurrentUser(user.displayName)
+            } else {
+        setCurrentUser(null)
+            }
+        });
     var docRef = db.collection("diners").doc(id);
     var docRefToDinnerMaker = db.collection('diners').doc(id).collection("dinnerMaker")
         docRefToDinnerMaker.onSnapshot(snapshot =>{
@@ -67,6 +81,10 @@ docRef.get().then((doc) => {
                 </div>
             ))}
         </div>}
+        {
+            !currentUser ? <p>Aby dołączyć do uczty musisz się zalogować</p> :
+        <button onClick={()=> addInvited()}>Dołącz</button>
+        }
     </div>) );
 }
  

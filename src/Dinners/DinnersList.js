@@ -38,9 +38,9 @@ useEffect(() => {
 
                     
 
-        ))
-            }
-            {currentUser ? <MakeDinner/>: false}
+                    ))
+                  }
+              {currentUser ? <MakeDinner/>: <p>Aby utworzyć ucztę musisz się zalogować</p>}
             
         </div>)
     );

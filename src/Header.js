@@ -1,5 +1,6 @@
-import { Button, Input, makeStyles, Modal } from "@material-ui/core";
+import { Button, Input, Link, makeStyles, Modal } from "@material-ui/core";
 import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 import {auth} from './firebase'
 function getModalStyle() {
     const top = 50;
@@ -31,6 +32,7 @@ const Header = () => {
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false)
   const [openLogin, setOpenLogin] = useState(false)
+  const [OpenLogout, setOpenLogout] = useState(false)
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
@@ -57,7 +59,7 @@ const Header = () => {
     auth
     .createUserWithEmailAndPassword(email, password)
     .then((userCredential) => {
-    // Signed in
+      setOpen(false)
     setUser( userCredential.user);
     auth.currentUser.updateProfile({
       displayName: username
@@ -82,7 +84,15 @@ const Header = () => {
     var errorMessage = error.message;
     alert(errorMessage)
   });
-  }
+
+}
+const logout = (e) => {
+  auth.signOut().then(() => {
+    // Sign-out successful.
+  }).catch((error) => {
+    // An error happened.
+  });
+}
     return ( 
         <div className="signup">
             {user&& <p>{user.displayName}</p>}
@@ -113,6 +123,8 @@ const Header = () => {
             />
             <Button type="submit" onClick={signUp}>Sign Up</Button>
           </form>
+          <p>Masz konto? </p>
+          <Button onClick={()=>{setOpenLogin(true); setOpen(false)}}>Zaloguj </Button>
           </center>
         </div>
 
@@ -138,14 +150,38 @@ const Header = () => {
             />
             <Button type="submit" onClick={login}>Login</Button>
           </form>
+          <p>Nie masz konta? </p>
+          <Button onClick={()=>{setOpenLogin(false); setOpen(true)}}>Zarejestruj </Button>
           </center>
         </div>
       </Modal>
-      
-    <Button onClick={()=> setOpen(true)}>Sign Up</Button>
-    <Button onClick={()=> setOpenLogin(true)}>LOGIN</Button>
+      <Modal
+        open={OpenLogout}
+        onClose={()=> setOpenLogout(false)}
+      >
+        <div style={modalStyle} className={classes.paper}>
+          <center>
+          
+          <p>Zostałeś wylogowany/a</p>
+          <Button onClick={()=> setOpenLogout(false)}>ok</Button>
+          </center>
         </div>
-     );
+      </Modal>
+
+      {!user ? 
+    // <Button onClick={()=> setOpen(true)}>Sign Up</Button>
+    <Button onClick={()=> setOpenLogin(true)}>LOGIN</Button> :
+    <Button 
+    onClick={()=> {setOpenLogout(true);
+    logout()  }}>
+        Wyloguj
+    </Button>
+      }
+    <NavLink  to="/dinners">
+    <Button>Uczty</Button>
+    </NavLink>
+        </div>
+    );
 }
- 
+
 export default Header;
