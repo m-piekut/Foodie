@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Switch, useParams } from "react-router-dom";
 import {auth, db} from '../firebase'
 
 const DinnerInfo = () => {
@@ -9,13 +9,17 @@ const DinnerInfo = () => {
     const [invited, setInvited]  = useState([])
     const [dinnerMaker, setDinnerMaker]  = useState([])
     const [currentUser, setCurrentUser] =useState(null);
+    const [alreadyJoined, setAlreadyJoined] = useState(false)
 
     const addInvited = ()=>{
-        const test = db.collection('diners').doc(id).collection("invited").add({
+            db.collection('diners').doc(id).collection("invited").add({
             avatar: "https://www.w3schools.com/howto/img_avatar.png",
             username: currentUser
         })
     }
+
+    
+
 
     useEffect(()=>{
         auth.onAuthStateChanged(user => {
@@ -52,7 +56,15 @@ docRef.get().then((doc) => {
 });
     
 },[])
-
+useEffect(()=>{
+    invited.map((item)=>{
+        if(item.invitedUser.username === currentUser){
+            setAlreadyJoined(true)
+        }else{
+            console.log('nie zgadza sie')
+        }
+    })
+},[invited])
 
 
     return ( 
@@ -83,7 +95,10 @@ docRef.get().then((doc) => {
         </div>}
         {
             !currentUser ? <p>Aby dołączyć do uczty musisz się zalogować</p> :
-        <button onClick={()=> addInvited()}>Dołącz</button>
+                (alreadyJoined ? <p>Już dołączyłeś do tej uczty</p> :
+                <button onClick={()=> addInvited()}>Dołącz</button>)
+
+        
         }
     </div>) );
 }
