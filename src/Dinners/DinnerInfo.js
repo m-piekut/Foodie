@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Switch, useParams } from "react-router-dom";
 import {auth, db} from '../firebase'
+import Timer from "../Timer";
 
 const DinnerInfo = () => {
 
@@ -44,7 +45,7 @@ const DinnerInfo = () => {
     console.log(invited)
 docRef.get().then((doc) => {
     if (doc.exists) {
-        console.log("Document data:", doc.data());
+        // console.log("Document data:", doc.data());
         setDinner(doc.data())
     } else {
         // doc.data() will be undefined in this case
@@ -69,6 +70,7 @@ useEffect(()=>{
 
     return ( 
     (dinner && <div className="dinner-info">
+        <Timer date={dinner.date} time={dinner.time}/>
         <div className="dinner-info__mainInfo">
             <h2 className="dinner-info__city">{dinner.city}</h2>
             <p className="dinner-info__date">{dinner.date} {dinner.time}</p>
@@ -102,5 +104,5 @@ useEffect(()=>{
         }
     </div>) );
 }
- 
+
 export default DinnerInfo;

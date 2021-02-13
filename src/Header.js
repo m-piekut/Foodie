@@ -42,7 +42,6 @@ const Header = () => {
     const usubscribe = auth.onAuthStateChanged((authUser)=>{
       if(authUser){
         //user loged in
-        console.log(authUser)
         setUser(authUser)
         
       }else{
