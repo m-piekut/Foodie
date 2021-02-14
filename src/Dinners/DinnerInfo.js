@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Switch, useParams } from "react-router-dom";
 import {auth, db} from '../firebase'
+import LeaveDinner from "../LeveDinner";
 import Timer from "../Timer";
 
 const DinnerInfo = () => {
@@ -42,7 +43,7 @@ const DinnerInfo = () => {
             id: doc.id,
             invitedUser: doc.data()})))
     })
-    console.log(invited)
+    // console.log(invited)
 docRef.get().then((doc) => {
     if (doc.exists) {
         // console.log("Document data:", doc.data());
@@ -92,6 +93,7 @@ useEffect(()=>{
                 <div className="dinner-info__user-box" key={id}>
                     <img src={invitedUser.avatar} alt="" className="dinner-info__avatar avatar"/>
                     <p className="dinner-info__user-name">{invitedUser.username}</p>
+                    {(currentUser === invitedUser.username ? <LeaveDinner  id={id}  /> : false)}
                 </div>
             ))}
         </div>}
