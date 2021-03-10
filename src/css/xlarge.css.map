@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,MAAM,EAAC,SAAS,EAAE,MAAM;EAEpB,AAAA,aAAa,CAAA;IACT,SAAS,EAAE,MAAM;IACjB,MAAM,EAAE,MAAM;GAYjB;EAXI,AAAD,yBAAa,CAAA;IAET,SAAS,EAAE,GAAG;IACd,eAAe,EAAE,UAAU;GAC9B;EAEA,AAAD,oBAAQ,CAAA;IACJ,KAAK,EAAE,GAAG;IACV,MAAM,EAAE,KAAK;IACb,WAAW,EAAE,EAAE;GAClB",
+    "sources": [
+        "../sass/xlarge.scss"
+    ],
+    "names": [],
+    "file": "xlarge.css"
+}

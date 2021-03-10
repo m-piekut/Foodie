@@ -16,6 +16,10 @@ a{
     text-decoration: none;
     color: black;
 }
+a.active{
+    margin: 0 10px;
+}
+
 html {
     font-family: "Quicksand";
     font-size: 62.5%;
@@ -36,6 +40,7 @@ html {
     color: $orange-color;
     font-size: 1.6rem;
 }
+
 .primary-btn{
     font-style: 1.2rem;
     padding: 3px 10px;
@@ -44,6 +49,7 @@ html {
     border-radius: 10px;
     text-align: center;
     font-weight: bold;
+    margin: 10px 0;
     cursor: pointer;
     transition: background-color .3s;
     &:hover{
@@ -51,9 +57,25 @@ html {
     }
 }
 .signup{
-    background-color: $orange-color;
-   
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     }
+.header-btn{
+    background: none;
+    font-size: 1.8rem;
+    padding: 5px 10px;
+    margin: 0;
+    color: $orange-color;
+    border: none;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.651);
+    cursor: pointer;
+    &:hover{
+        background-color: #f57803;
+        color: white;
+    }
+}
 
 .makeStyles-paper-1{
     max-width: 300px;  
@@ -193,72 +215,265 @@ html {
 }
 
 .user-profile{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+   
+    
     width: 100vw;
+    height: 100vh;
     &-quote{
         font-size: 2rem;
         font-weight: 100;
         font-style: italic;
     }
+    &__form-procentage{
+        font-size: 3rem;
+        color: #ffa957;
+    }
+    &__form-progress{
+        border-radius: 7px; 
+        width: 80%;
+        max-width: 600px;
+        height: 11px;
+        box-shadow: 1px 1px 4px rgba( 0, 0, 0, 0.2 );
+        background-color: white;
+        &::-webkit-progress-bar {
+            background-color: $orange-color;
+            border-radius: 7px;
+          }
+          &::-webkit-progress-value {
+            background-image: linear-gradient(315deg, #fac86b 12%, #f3a053 62%);
+            border-radius: 7px;
+            box-shadow: 1px 1px 5px 3px rgba(241, 156, 29, 0.8);
+          }
+          &::-moz-progress-bar {
+            background-image: linear-gradient(315deg, #fac86b 12%, #f3a053 62%);
+            border-radius: 7px;
+            box-shadow: 1px 1px 5px 3px rgba(241, 156, 29, 0.8);
+          }
+    }
+    &__form-textarea{
+        padding: 5px;
+        width: 90%;
+        max-width: 600px;
+        height: 100px;
+    }
     .user-info{
         display: flex;
         flex-direction: column;
         align-items: center;
-        background-color: $green-color;
+        width: 100%;
+        max-width: 450px;
+        background-image: url('../img/Vector.svg');
+        background-size: 100% auto ;
+        background-position-Y: 0;
+        background-repeat: no-repeat;
+        background-color: $orange-color;
+        // background-color: $green-color;
+       
         &__image{
-            width: 165px;
-            height: 100px;
-            border-radius: 55px;
+            margin-top: 3em;
+            width: 112px;
+            height: 112px;
+            border-radius: 50%;
+            border: 1px solid $orange-color;
+            box-shadow: 0px 0px 13px 3px black;
+        }
+        &__username{
+            margin-top: .8em;
+            margin-bottom: 1.5em;
+            color: $green-color;
+            font-size: 2.3rem;
         }
         &__personal{
             display: flex;
             flex-direction: column;
             align-items: center;
+            width: 100%;
             &-upper{
                 font-size: 1.4rem;
-                width: 165px;
+                width: 100%;
                 display: flex;
+                flex-direction: column;
                 justify-content: space-between;
+                align-items: center;
                 font-weight: bold;
             }
             &-description{
-                width: 80%;
+                position: relative;
+                width: 90%;
                 margin-top: 15px;
                 margin-bottom: 40px;
                 color: $light-color;
-                font-weight: bold;
+                font-size: 1.2rem;
+                font-weight: normal;
                 text-align: center;
+                &::after{
+                    z-index: 10;
+                    content: "";
+                    position: absolute;
+                    bottom: -15px;
+                    left: 0;
+                    right: 0;
+                    background: transparent;
+                    width: 100%;
+                    height: 1px;
+                    box-shadow: 0 2px 5px 3px rgba(0, 0, 0, 0.152);
+                }
             }
         }
         &__emotes{
+            position: relative;
             display: flex;
-            justify-content: space-between;
-            width: 30%;
+            justify-content: space-around;
+            width: 90%;
+            color: white;
+            margin-bottom: 15px;
+            &::after{
+                content: "";
+                position: absolute;
+                bottom: -10px;
+                background: transparent;
+                width: 100%;
+                height: 1px;
+                box-shadow: 0 2px 5px 3px rgba(0, 0, 0, 0.152);
+            }
             &-item{
+                font-size: 3.4rem;
                 display: flex;
-                margin-right: 5px;
+                text-shadow: black 3px 3px 6px ;
+                
                 p{
-                    margin-left: 3px;
+                    margin-left: 5px;
+                }
+                &--middle{
+                    padding: 0 30px;
+                    border-right: 2px solid rgba(255, 252, 250, 0.712);
+                    border-left: 2px solid rgba(255, 252, 250, 0.712);
                 }
             }
         }
     }
     &__images-box{
         width: 100%;
+        padding: 0 5px;
+        max-width: 450px;
         display: flex;
         flex-direction: column;
         align-items: center;
+        background-color: $orange-color;
 
         img{
-            width: 314px;
-            height: 230px;
+            width: 100%;
+            // height: 230px;
             margin-bottom: 5px;
             border: 1px solid black;
         }
     }
+    &__image{
+        position: relative;
+    }
+    &__deletePhoto{
+        position: absolute;
+        right: 5px;
+        top: 5px;
+        // padding: 2px 4px;
+        width: 25px;
+        height: 25px;
+        background-color: white;
+        border: 2px solid $orange-color;
+        border-radius: 50%;
+        transition: background-color .3s, color .3s;
+        cursor: pointer;
+        &:hover{
+            background-color: rgba(0,0,0,.8);
+            color: white;
+        }
+    }
 }
+.add-photos {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 1em auto;
+    width: 150px;
+    height: 50px;
+    font-size: 1.5rem;
+    background-color: rgb(213, 212, 212);
+    border: 2px solid white;
+    border-radius: 20px;
+    box-shadow: 0 1px 3px 1px rgb(214, 213, 213);
+    cursor: pointer;
+    transition: background-color .3s, border .3s, color .3s, font-weight .3s;
+
+    &:hover {
+        background-color: white;
+        border: 2px solid rgb(213, 212, 212);
+    }
+    &:hover .add-photos__icon{
+        border-color: $orange-color;
+
+    }
+    &__icon{
+        color: grey;
+        border: 3px solid grey;
+        border-radius: 50%;
+        padding: 2px 3px;
+        font-size: 2rem;
+        transition: border-color .3s;
+    }
+
+}
+
+
+.friends{
+    background-color: white;
+    width: 85%;
+    margin-top: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &__wrapper{
+        width: 100%;
+    }
+    &__listItem{
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: $light-color;
+        width: 90%;
+        margin: 4px auto;
+        height: 25px;
+        &:hover{
+            background-color: grey;
+        }
+    }
+    &__avatar{
+        position: absolute;
+        left: -10px;
+    }
+    &__right{
+        position: relative;
+        display: flex;
+        margin-right: 0;
+        width: 100%;
+        justify-content: space-evenly;
+    }
+    &__delete{
+        // align-self: flex-end;
+        position: absolute;
+        right: 5px;
+    }
+}
+
+
 
 .dinner-list{
     width: 100%;
+    max-width: 400px;
     margin: 0 auto;
     &__header{
         margin: .7em;
@@ -313,10 +528,11 @@ html {
 
 .dinner-info{
     width: 90%;
+    max-width: 600px;
     margin: 0 auto;
     &__city{
         font-size: 3rem;
-        margin-top: 38px;
+        margin-top: 1em;
     }
     &__date{
         font-size: 1.5rem;
@@ -340,6 +556,8 @@ html {
     }
     &__user-box{
         display: flex;
+        align-items: center;
+        justify-content: center;
         position: relative;
         width: 90%;
         background-color: #f89a42;
@@ -361,7 +579,11 @@ html {
 .new-dinner{
     background-color: $green-color;
     width: 100%;
+    max-width: 500px;
     position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -385,4 +607,27 @@ html {
         display: flex;
         justify-content: space-between;
     }
+    &__addButton{
+        margin: 10px 0;
+    }
+}
+
+.timer-box{
+    margin-top: 1.4em;
+    &__header{
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+    &__info{
+        font-size: 1.4rem;
+        color: $orange-color;
+    }
+}
+.leaveButton{
+    background: $green-color;
+    border: none;
+    padding: 3px 6px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
 }

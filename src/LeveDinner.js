@@ -15,7 +15,7 @@ const LeaveDinner = ({id}) => {
 
 
     return ( 
-        <p onClick={()=>leave()}>Opuść</p>
+        <button className="leaveButton" onClick={()=>leave()}>Opuść</button>
      );
 }
  

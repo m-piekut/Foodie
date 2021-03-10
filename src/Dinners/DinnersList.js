@@ -17,6 +17,8 @@ useEffect(() => {
         dinner: doc.data()
 
         })))
+        console.log(auth.X)
+        console.log(auth.currentUser)
    });
    auth.onAuthStateChanged(user => {
     if (user) {
@@ -32,16 +34,12 @@ useEffect(() => {
             <h3 className="dinner-list__header">Lista uczt:</h3>
             {
                 dinners.map(({id, dinner}) => (
-                   
                     <Dinner city={dinner.city} date={dinner.date} time={dinner.time} address={dinner.address} name={dinner.name} key={id} dinnerId = {id}></Dinner>
-                    
-
-                    
-
                     ))
                   }
               {currentUser ? <MakeDinner/>: <p>Aby utworzyć ucztę musisz się zalogować</p>}
-            
+                  
+                
         </div>)
     );
 }

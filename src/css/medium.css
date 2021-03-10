@@ -1,0 +1,16 @@
+@media (min-width: 768px) {
+  .user-profile .user-info__image {
+    position: relative;
+    left: 25%;
+    width: 80%;
+    max-width: 270px;
+    height: 30%;
+    max-height: 220px;
+    border-radius: 55px;
+    object-fit: fill;
+  }
+  .user-profile .user-info__username {
+    left: 25%;
+  }
+}
+/*# sourceMappingURL=medium.css.map */

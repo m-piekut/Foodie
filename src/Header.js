@@ -1,7 +1,7 @@
-import { Button, Input, Link, makeStyles, Modal } from "@material-ui/core";
+import { Button, Input, makeStyles, Modal } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import {auth} from './firebase'
+import {auth, db} from './firebase'
 function getModalStyle() {
     const top = 50;
     const left = 50;
@@ -63,6 +63,20 @@ const Header = () => {
     auth.currentUser.updateProfile({
       displayName: username
     })
+    db.collection("users").doc(auth.currentUser.X.X).set({
+      username: username,
+      avatar: "https://www.w3schools.com/howto/img_avatar.png",
+      description: "Twój opis",
+      dinners: 0,
+      likes: 0,
+      quote: "twój cytat"
+  })
+  .then(() => {
+      console.log("Document successfully written!");
+  })
+  .catch((error) => {
+      console.error("Error writing document: ", error);
+  });
   })
   .catch((error) => {
     var errorCode = error.code;
@@ -123,7 +137,7 @@ const logout = (e) => {
             <Button type="submit" onClick={signUp}>Sign Up</Button>
           </form>
           <p>Masz konto? </p>
-          <Button onClick={()=>{setOpenLogin(true); setOpen(false)}}>Zaloguj </Button>
+          <button onClick={()=>{setOpenLogin(true); setOpen(false)}}>Zaloguj </button>
           </center>
         </div>
 
@@ -166,19 +180,26 @@ const logout = (e) => {
           </center>
         </div>
       </Modal>
-
+      <h1>Foodie</h1>
       {!user ? 
     // <Button onClick={()=> setOpen(true)}>Sign Up</Button>
-    <Button onClick={()=> setOpenLogin(true)}>LOGIN</Button> :
-    <Button 
+    <button className="header-btn" onClick={()=> setOpenLogin(true)}>LOGIN</button> :
+    <button className="header-btn"
     onClick={()=> {setOpenLogout(true);
     logout()  }}>
         Wyloguj
-    </Button>
+    </button>
       }
     <NavLink  to="/dinners">
-    <Button>Uczty</Button>
+    <i className="fas fa-utensils header-btn"></i>
     </NavLink>
+    {
+      auth.currentUser &&
+    <NavLink  to={`/users/${auth.currentUser.X.X}`}>
+    <i className="fas fa-user header-btn"></i>
+    </NavLink>
+  }
+    
         </div>
     );
 }

@@ -1,0 +1,103 @@
+$orange-color: #FF7D00;
+$green-color: #15616D;
+
+@media(min-width: 576px) {
+
+    .signup{
+        background-color: white;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        padding-left: 10%;
+        }
+
+
+
+
+    .user-profile {
+        padding: 0 0px 0 20px;
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: flex-start;
+        justify-content: center;
+        position: relative;
+        height: 100%;
+        max-width: 98vw;
+
+        .user-info {
+
+            position: sticky;
+            top: 0;
+            transform: translate(-5%);
+            height: 100vh;
+            background-image: none;
+            background-color: $orange-color;
+
+            &::after {
+                content: "";
+                position: absolute;
+                z-index: -1;
+                right: 80%;
+                top: 0;
+                width: 50%;
+                height: 100%;
+                background: linear-gradient(90deg, rgb(255, 255, 255) 0%, rgba(255,125,0,1) 50%);
+               
+            }
+            &__username{
+                font-size: 2.7rem;
+                color: white;
+                position: relative;
+                left: 15%;
+                margin-top: 2px;
+            }
+            &__personal{
+                &-description{
+                    position: relative;
+                    left: 10%;
+                    width: 70%;
+                    margin-top: 15px;
+                    // margin-bottom: 40px;
+                    font-size: 1.4rem;
+                    font-weight: normal;
+                    text-align: right;
+                    line-height: 130%;
+                }
+            }
+            &__image{
+                position: relative;
+                left: 15%;
+                width: 80%;
+                max-width: 250px;
+                height: 30%;
+                max-height: 220px;
+                border-radius: 55px;
+                object-fit: fill;
+            }
+        }
+
+        &__images-box {
+            margin-top: 30px;
+            background: none;
+            min-height: 100%;
+        }
+    }
+
+    .user-profile__image:first-child {
+        margin-top: 30px;
+    }
+
+   
+
+    .user-profile__images-box img {
+        border: 3px solid black;
+        margin-bottom: 25px;
+    }
+
+    .add-photos {
+        margin: 2em auto;
+
+    }
+}
+
+@media(min-width: 650px) {}

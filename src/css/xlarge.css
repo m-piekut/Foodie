@@ -1,0 +1,16 @@
+@media (min-width: 1500px) {
+  .user-profile {
+    max-width: 1700px;
+    margin: 0 auto;
+  }
+  .user-profile__images-box {
+    max-width: 95%;
+    justify-content: flex-start;
+  }
+  .user-profile__image {
+    width: 32%;
+    height: 250px;
+    margin-left: 1%;
+  }
+}
+/*# sourceMappingURL=xlarge.css.map */

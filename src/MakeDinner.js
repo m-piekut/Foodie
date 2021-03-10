@@ -15,9 +15,9 @@ const MakeDinner = () => {
     useEffect(()=>{
         auth.onAuthStateChanged(user => {
             if (user) {
-              setCurrentUser(user.displayName)
+                setCurrentUser(user.displayName)
             } else {
-              setCurrentUser(null)
+                setCurrentUser(null)
             }
           });
           
@@ -61,24 +61,6 @@ const MakeDinner = () => {
 
             <form className="new-dinner" onSubmit={(e)=>handleSubmit(e)}>
             <h3>Stwórz ucztę</h3>
-             
-                <input className="new-dinner__input new-dinner__input--city"
-                type="text" placeholder="Miasto" 
-                required
-                value={city} 
-                onChange={(e)=> setCity(e.target.value)}/>
-
-                <input className="new-dinner__input new-dinner__input--name"
-                required
-                type="text"
-                placeholder="Nazwa miejsca"
-                onChange={(e)=> setName(e.target.value)}/>
-
-                <input className="new-dinner__input new-dinner__input--address"
-                required
-                type="text" 
-                placeholder="Adres uczty"
-                onChange={(e)=> setAddress(e.target.value)}/>
                 <div className="new-dinner__input new-dinner__input--date" >
                 <label htmlFor="date">Data uczty</label>
                 <input id="date" type="date" 
@@ -99,10 +81,28 @@ const MakeDinner = () => {
                 />
                 </div>
 
+                <input className="new-dinner__input new-dinner__input--city"
+                type="text" placeholder="Miasto" 
+                required
+                value={city} 
+                onChange={(e)=> setCity(e.target.value)}/>
+
+                <input className="new-dinner__input new-dinner__input--name"
+                required
+                type="text"
+                placeholder="Nazwa miejsca"
+                onChange={(e)=> setName(e.target.value)}/>
+
+                <input className="new-dinner__input new-dinner__input--address"
+                required
+                type="text" 
+                placeholder="Adres uczty"
+                onChange={(e)=> setAddress(e.target.value)}/>
+
                 <button className="primary-btn">Wyslij</button>
             </form>
             </Modal>
-            <Button onClick={()=> setOpenForm(true)}>Dodaj ucztę</Button>
+            <button className="primary-btn new-dinner__addButton" onClick={()=> setOpenForm(true)}>Dodaj ucztę</button>
         </div>
     );
 }

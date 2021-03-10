@@ -20,9 +20,8 @@ const Timer = ({date, time}) => {
 
     return ( 
       <div className="timer-box">
-         <p>Uczta za:</p>
-         <p>godziny:minuty:sekundy</p>
-         <p>{(Math.floor(test2/3600000))} { Math.floor(((test2 % 3600000) / 60000))} { (((test2 % 3600000) % 60000)/ 1000).toFixed(0)} sds</p>
+         <p className="timer-box__header">Uczta za:</p>
+         <p className="timer-box__info">{(Math.floor(test2/3600000))} godziny { Math.floor(((test2 % 3600000) / 60000))} minuty { (((test2 % 3600000) % 60000)/ 1000).toFixed(0)} sekundy</p>
       </div>
      );
 }

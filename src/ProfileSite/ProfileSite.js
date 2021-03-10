@@ -1,41 +1,67 @@
 
-import { useParams } from "react-router-dom";
-import useFetch from "../Components/useFetch";
 
+import { cleanup } from "@testing-library/react";
+import { useEffect, useState } from "react";
+import { useParams, withRouter } from "react-router-dom";
+import {auth, db} from '../firebase'
+import StandardProfile from "./StandardProfile";
+import YourProfile from "./YourProfile";
 const ProfileSite = () => {
     const {id} = useParams()
-    const {data : user, isPending, error} = useFetch('http://localhost:8000/users/' + id)
+    const [userProfile, setUserProfile] = useState([])
+    const [isItYourProfile, setIsItYourProfile] = useState(false);
+    const [currentUser, setCurrentUser] = useState(null);
+    const [userImages, setUserImages] = useState(null)
+    const [loading, setLoading] = useState(true)
     
-    return ( 
-        (user && <div className="user-profile">
-            <p className="user-profile-quote">{user.quote}</p>
-            <div className="user-info">
-                <img className="user-info__image" src="https://warsztatauto.files.wordpress.com/2015/06/avatar.gif" alt=""/>
-                <div className="user-info__personal">
-                    <div className="user-info__personal-upper">
-                    <p>{user.name}</p>
-                    <div className="user-info__emotes">
-                        <div className="user-info__emotes-item">
-                            <i className="far fa-grin-tongue "></i>
-                            <p>{user.likes}</p>
-                        </div>
-                        <div className="user-info__emotes-item">
-                            <i className="fas fa-utensils"></i>
-                            <p>{user.dinners}</p>
-                        </div>
-                    </div>
-                    </div>
-                    <p className="user-info__personal-description">{user.description}</p>
-                </div>
-                            <i className="fas fa-utensils"></i>
-            </div>
-            <div className="user-profile__images-box">
-                {user.images.map((image)=>(
-                    <img src={image.source} alt=""  key={image.id}/>
-                ))}
-            </div>
-        </div>)
-     );
-    }
+
+   
+    useEffect(() => {
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                setCurrentUser(user.displayName)
+                if( id === auth.X){
+                    setIsItYourProfile(true)
+                    console.log(isItYourProfile)
+                }else{
+                    setIsItYourProfile(false)
+                    console.log('czekaj')
+                }
+                } else {
+            setCurrentUser(null)
+
+                }
+            });
+      db.collection("users").doc(id)
+    .onSnapshot((doc) => {
+      setUserProfile(doc.data())
+    });
+    db.collection('users').doc(id).collection('images').onSnapshot(snapshot=>{
+        setUserImages(snapshot.docs.map(doc => ({
+         id : doc.id,
+         image: doc.data()
  
-export default ProfileSite;
+         })))
+        });
+        setLoading(false)
+        return()=>{
+            
+        }
+
+     },[id] );
+    
+    
+
+
+    return ( 
+        
+
+            (userProfile &&  (
+                isItYourProfile ?  <YourProfile userProfile={userProfile}  userImages={userImages}/> : <StandardProfile userProfile={userProfile} userImages={userImages} userId={id}/>
+            )
+                
+            )
+       
+    )
+        }
+export default withRouter(ProfileSite);

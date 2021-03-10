@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Switch, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import {auth, db} from '../firebase'
 import LeaveDinner from "../LeveDinner";
 import Timer from "../Timer";
@@ -11,13 +11,18 @@ const DinnerInfo = () => {
     const [invited, setInvited]  = useState([])
     const [dinnerMaker, setDinnerMaker]  = useState([])
     const [currentUser, setCurrentUser] =useState(null);
+    const [currentUserId, setCurrentUserId] =useState(null);
     const [alreadyJoined, setAlreadyJoined] = useState(false)
+    const [avatar, setAvatar] = useState(false)
 
     const addInvited = ()=>{
             db.collection('diners').doc(id).collection("invited").add({
-            avatar: "https://www.w3schools.com/howto/img_avatar.png",
-            username: currentUser
+            avatar: avatar,
+            username: currentUser,
+            id: currentUserId
+            
         })
+        
     }
 
     
@@ -27,8 +32,14 @@ const DinnerInfo = () => {
         auth.onAuthStateChanged(user => {
         if (user) {
             setCurrentUser(user.displayName)
+            setCurrentUserId(user.X.X)
+            db.collection('users').doc(user.X.X).onSnapshot((doc)=>{
+                setAvatar(doc.data().avatar)
+            })
+            
             } else {
         setCurrentUser(null)
+        setCurrentUserId(null)
             }
         });
     var docRef = db.collection("diners").doc(id);
@@ -62,9 +73,8 @@ useEffect(()=>{
     invited.map((item)=>{
         if(item.invitedUser.username === currentUser){
             setAlreadyJoined(true)
-        }else{
-            console.log('nie zgadza sie')
         }
+        
     })
 },[invited])
 
@@ -87,12 +97,15 @@ useEffect(()=>{
                 <div className="dinner-info__user-box" key={id}>
                     <img src={maker.avatar} alt="" className="dinner-info__avatar avatar"/>
                     <p className="dinner-info__user-name">{maker.username}</p>
+                    
                 </div>
             ))}
             {invited.map(({id, invitedUser}) =>(
                 <div className="dinner-info__user-box" key={id}>
                     <img src={invitedUser.avatar} alt="" className="dinner-info__avatar avatar"/>
-                    <p className="dinner-info__user-name">{invitedUser.username}</p>
+                   
+                        <p className="dinner-info__user-name"> <Link to={`/users/${invitedUser.id}`}>{invitedUser.username} </Link></p>
+                       
                     {(currentUser === invitedUser.username ? <LeaveDinner  id={id}  /> : false)}
                 </div>
             ))}
@@ -100,7 +113,7 @@ useEffect(()=>{
         {
             !currentUser ? <p>Aby dołączyć do uczty musisz się zalogować</p> :
                 (alreadyJoined ? <p>Już dołączyłeś do tej uczty</p> :
-                <button onClick={()=> addInvited()}>Dołącz</button>)
+                <button className="primary-btn" onClick={()=> addInvited()}>Dołącz</button>)
 
         
         }
