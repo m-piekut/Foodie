@@ -1,29 +1,31 @@
 import { Modal } from "@material-ui/core"
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 import {db, storage} from '../firebase'
+
 import AddPhotos from "./AddPhotos";
 import DeletePhoto from "./DeletePhoto";
 import Friends from "./Friends/Friends";
 import Invites from "./Friends/Invites";
+import ProfileDinners from "./ProfileDinners";
 
 const YourProfile = ({userProfile, userImages}) => {
-
-    const {id} = useParams();
+    const { loggedUserId} = useSelector(state => state.takeData)
+    const id = loggedUserId
     const [quoteForm, setQuoteForm]  = useState(false);
     const [avatarForm, setAvatarForm]  = useState(false);
     const [descriptionForm, setDescriptionForm]  = useState(false);
 
     const [quote, setQuote] = useState('');
-    const [avatar, setAvatar] = useState('');
     const [description, setDescription] = useState('');
 
     const [userDbPath, setUserDbPath] = useState(null)
     const[showFriends,setShowFriends] = useState(false)
+    const[showDinners,setShowDinners] = useState(false)
     
     useEffect(()=>{
         setQuote(userProfile.quote)
-        setAvatar(userProfile.avatar)
         setDescription(userProfile.description)
         setUserDbPath(db.collection('users').doc(id))
         
@@ -65,7 +67,7 @@ const YourProfile = ({userProfile, userImages}) => {
                     (snapshot.bytesTransferred / snapshot.totalBytes) *100
                 );
                 setProgress(progress)
-                if(progress == 100){
+                if(progress === 100){
                     setTimeout(() => {
                         setAvatarForm(false)
                         
@@ -107,17 +109,20 @@ const YourProfile = ({userProfile, userImages}) => {
                             <i className="far fa-grin-tongue "></i>
                             <p>{userProfile.likes}</p>
                         </div>
-                        <div className="user-info__emotes-item user-info__emotes-item--middle">
+                        <div className="user-info__emotes-item user-info__emotes-item--middle" onClick={()=>{setShowDinners(!showDinners); 
+                            setShowFriends(false)}}>
                             <i className="fas fa-utensils"></i>
                             <p>{userProfile.dinners}</p>
                         </div>
-                        <div className="user-info__emotes-item user-info__emotes-item"  onClick={()=>setShowFriends(!showFriends)}>
+                        <div className="user-info__emotes-item user-info__emotes-item"   onClick={()=>{setShowFriends(!showFriends); 
+                        setShowDinners()}}>
                         <i className="fas fa-user-friends"></i>
-                            <p>{userProfile.dinners}</p>
+                            <p>{userProfile.friends}</p>
                         </div>
                     </div>
-                {showFriends && [<Invites  id={id} />,
-                    <Friends isItYourProfile={true} /> ]}
+                {showFriends && [<Invites key='1'  id={id} />,
+                    <Friends key='2' isItYourProfile={true} /> ]}
+                    {showDinners && <ProfileDinners/>}
                     </div>
                     <p className="user-info__personal-description" onClick={()=>setDescriptionForm(true)}>{userProfile.description}</p>
                 </div>

@@ -1,19 +1,23 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import {auth, db} from '../firebase'
-import LeaveDinner from "../LeveDinner";
+import LeaveDinner from "./LeveDinner";
 import Timer from "../Timer";
+import firebase from 'firebase'
+import Site404 from "../Site404";
+import Loader from "../Loader";
 
 const DinnerInfo = () => {
 
     const {id} = useParams();
-    const [dinner, setDinner]  = useState([])
+    const [dinner, setDinner]  = useState(null)
     const [invited, setInvited]  = useState([])
     const [dinnerMaker, setDinnerMaker]  = useState([])
     const [currentUser, setCurrentUser] =useState(null);
     const [currentUserId, setCurrentUserId] =useState(null);
     const [alreadyJoined, setAlreadyJoined] = useState(false)
     const [avatar, setAvatar] = useState(false)
+    const [loading, setLoading] = useState(true)
 
     const addInvited = ()=>{
             db.collection('diners').doc(id).collection("invited").add({
@@ -22,7 +26,16 @@ const DinnerInfo = () => {
             id: currentUserId
             
         })
-        
+        db.collection('users').doc(auth.X).collection('dinners').doc(id).set({
+            date: dinner.date,
+            name: dinner.name,
+            time: dinner.time,
+            city: dinner.city,
+            id: id
+        })
+        db.collection('users').doc(auth.X).update({
+            dinners: firebase.firestore.FieldValue.increment(1)
+        })
     }
 
     
@@ -59,9 +72,11 @@ docRef.get().then((doc) => {
     if (doc.exists) {
         // console.log("Document data:", doc.data());
         setDinner(doc.data())
+        setLoading(false)
     } else {
         // doc.data() will be undefined in this case
         console.log("No such document!");
+        setLoading(false)
     }
 
 }).catch((error) => {
@@ -70,17 +85,26 @@ docRef.get().then((doc) => {
     
 },[])
 useEffect(()=>{
-    invited.map((item)=>{
-        if(item.invitedUser.username === currentUser){
-            setAlreadyJoined(true)
-        }
+    
+    if(invited){
         
-    })
+        for (let i = 0; i < invited.length; i++) {
+            if(invited[i].invitedUser.id === auth.X){
+                setAlreadyJoined(true)
+                break;
+            }
+            else{
+                setAlreadyJoined(false)
+            }
+            
+        }
+    }
+
 },[invited])
 
 
     return ( 
-    (dinner && <div className="dinner-info">
+    (!loading ? (dinner ? <div className="dinner-info">
         <Timer date={dinner.date} time={dinner.time}/>
         <div className="dinner-info__mainInfo">
             <h2 className="dinner-info__city">{dinner.city}</h2>
@@ -117,7 +141,7 @@ useEffect(()=>{
 
         
         }
-    </div>) );
+    </div>: <Site404/> ) : <Loader/>));
 }
 
 export default DinnerInfo;

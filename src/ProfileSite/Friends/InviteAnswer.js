@@ -1,5 +1,5 @@
 import { db } from "../../firebase";
-
+import firebase from 'firebase'
 const InviteAnswer = ({from, yourId, avatar, username}) => {
    
     const acceptInvite= ()=>{
@@ -15,7 +15,9 @@ const InviteAnswer = ({from, yourId, avatar, username}) => {
                 console.log(error)
             })
         )
-        
+        db.collection('users').doc(yourId).update({
+            friends: firebase.firestore.FieldValue.increment(1)
+        })
         
     }
     const declineInvite = ()=>{

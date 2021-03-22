@@ -16,6 +16,7 @@ const Invites = ({id}) => {
         })))      
     })
     return()=>{
+        cleanup()
     }
    },[])
 

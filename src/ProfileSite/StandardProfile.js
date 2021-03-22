@@ -1,31 +1,39 @@
+
 import { useEffect, useState } from "react";
 import { auth, db } from "../firebase";
+import Site404 from "../Site404";
 import AddToFriends from "./Friends/AddToFriends"
 import Friends from "./Friends/Friends"
+import ProfileDinners from "./ProfileDinners";
 
 
 const StandardProfile = ({userProfile, userImages, userId}) => {
 
 
     const[showFriends,setShowFriends] = useState(false)
-    const[alreadyInvite, setAlreadyInvite] = useState(null)
-    const[alreadyFriend, setAlreadyFriend] = useState(null)
-    const [test, setTest] = useState(null)
+    const[showDinners,setShowDinners] = useState(false)
+    const[alreadyInvite, setAlreadyInvite] = useState(true)
+    const[alreadyFriend, setAlreadyFriend] = useState(true)
 
     useEffect(()=>{
-        db.collection('users').doc(userId).collection('invites').doc(auth.X).onSnapshot((doc)=>{
+        if (auth.X) {db.collection('users').doc(userId).collection('invites').doc(auth.X).onSnapshot((doc)=>{
             setAlreadyInvite(doc.data())
         })
         db.collection('users').doc(userId).collection('friends').doc(auth.X).onSnapshot((doc)=>{
             setAlreadyFriend(doc.data())
-        })
+        })} else{
+            setAlreadyFriend(false)
+            setAlreadyInvite(false)
+        }
        
-        return
-    },[])
+        return function cleanup(){
+
+        }
+    },[alreadyInvite, alreadyFriend])
 
 
     return (  
-        <div className="user-profile">
+        (userProfile ? (<div className="user-profile">
             {/* <p className="user-profile-quote">{userProfile.quote}</p> */}
             <div className="user-info">
                 <img className="user-info__image" src={userProfile.avatar} alt=""/>
@@ -37,22 +45,26 @@ const StandardProfile = ({userProfile, userImages, userId}) => {
                             <i className="far fa-grin-tongue "></i>
                             <p>{userProfile.likes}</p>
                         </div>
-                        <div className="user-info__emotes-item user-info__emotes-item--middle">
+                        <div className="user-info__emotes-item user-info__emotes-item--middle"
+                        onClick={()=>{setShowDinners(!showDinners); 
+                            setShowFriends(false)}}>
                             <i className="fas fa-utensils"></i>
                             <p>{userProfile.dinners}</p>
                         </div>
-                        <div className="user-info__emotes-item user-info__emotes-item" onClick={()=>setShowFriends(!showFriends)}>
+                        <div className="user-info__emotes-item user-info__emotes-item" 
+                        onClick={()=>{setShowFriends(!showFriends); 
+                        setShowDinners(false)}}>
                         <i className="fas fa-user-friends"></i>
-                            <p >2</p>
+                            <p >{userProfile.friends}</p>
                         </div>
                     </div>
-                    {showFriends && <Friends/>
-                    }
+                    {showFriends && <Friends/>}
+                    {showDinners && <ProfileDinners/>}
                     </div>
                     <p className="user-info__personal-description">{userProfile.description}</p>
                 </div>
                            {/* <i className="fas fa-utensils"></i> */}
-                {!alreadyInvite && !alreadyFriend ? <AddToFriends userProfile={userProfile}/>: "juz zaprosiłes/obserwujesz"}
+                {auth.X ? ( !alreadyInvite && !alreadyFriend ? <AddToFriends userProfile={userProfile}/>: "juz zaprosiłes/obserwujesz") : false}
             </div>
             {userImages &&<div className="user-profile__images-box">
                 {userImages.map(({id, image})=>(
@@ -62,7 +74,7 @@ const StandardProfile = ({userProfile, userImages, userId}) => {
                </div>
                 ))}
             </div>}
-        </div>
+        </div>) : <Site404/>)
 
      );
 }

@@ -1,7 +1,9 @@
 import { Button, Input, makeStyles, Modal } from "@material-ui/core";
 import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { NavLink, useHistory } from "react-router-dom";
 import {auth, db} from './firebase'
+import { loginOut, loginUp } from "./redux/userData/userDataSlice";
 function getModalStyle() {
     const top = 50;
     const left = 50;
@@ -28,7 +30,7 @@ function getModalStyle() {
 
 const Header = () => {
     const classes = useStyles();
-
+  const history = useHistory()
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false)
   const [openLogin, setOpenLogin] = useState(false)
@@ -37,15 +39,18 @@ const Header = () => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [user, setUser] = useState(null);
+  const {userUsername, userId, userPhotos} = useSelector(state => state.takeData)
+  const dispatch = useDispatch()
 
   useEffect(()=>{
     const usubscribe = auth.onAuthStateChanged((authUser)=>{
       if(authUser){
         //user loged in
         setUser(authUser)
-        
+        dispatch(loginUp())
       }else{
         setUser(null);
+        dispatch(loginOut())
       }
     })
     return () => {
@@ -91,6 +96,7 @@ const Header = () => {
     .then((userCredential) => {
     // Signed in
     setUser( userCredential.user);
+    dispatch(loginUp())
   })
   .catch((error) => {
     var errorCode = error.code;
@@ -102,6 +108,8 @@ const Header = () => {
 const logout = (e) => {
   auth.signOut().then(() => {
     // Sign-out successful.
+    history.push('/')
+    dispatch(loginOut())
   }).catch((error) => {
     // An error happened.
   });
@@ -134,10 +142,10 @@ const logout = (e) => {
               value={password}
               onChange={(e)=> setPassword(e.target.value)}
             />
-            <Button type="submit" onClick={signUp}>Sign Up</Button>
+            <Button type="submit" onClick={signUp}>Załóż konto</Button>
           </form>
           <p>Masz konto? </p>
-          <button onClick={()=>{setOpenLogin(true); setOpen(false)}}>Zaloguj </button>
+          <Button onClick={()=>{setOpenLogin(true); setOpen(false)}}>Zaloguj </Button>
           </center>
         </div>
 
@@ -161,7 +169,7 @@ const logout = (e) => {
               value={password}
               onChange={(e)=> setPassword(e.target.value)}
             />
-            <Button type="submit" onClick={login}>Login</Button>
+            <Button type="submit" onClick={(e)=>{login(e); setOpenLogin(false)}}>Zaloguj</Button>
           </form>
           <p>Nie masz konta? </p>
           <Button onClick={()=>{setOpenLogin(false); setOpen(true)}}>Zarejestruj </Button>
@@ -183,7 +191,7 @@ const logout = (e) => {
       <h1>Foodie</h1>
       {!user ? 
     // <Button onClick={()=> setOpen(true)}>Sign Up</Button>
-    <button className="header-btn" onClick={()=> setOpenLogin(true)}>LOGIN</button> :
+    <button className="header-btn" onClick={()=> setOpenLogin(true)}>Login</button> :
     <button className="header-btn"
     onClick={()=> {setOpenLogout(true);
     logout()  }}>

@@ -10,7 +10,7 @@ const MakeDinner = () => {
     const [date, setDate] = useState('');
     const [time, setTime] = useState('');
     const [currentUser, setCurrentUser] = useState(null);
-
+    const [avatar, setAvatar] = useState(null);
     const [openForm, setOpenForm] = useState(false)
     useEffect(()=>{
         auth.onAuthStateChanged(user => {
@@ -20,6 +20,9 @@ const MakeDinner = () => {
                 setCurrentUser(null)
             }
           });
+          db.collection('users').doc(auth.X).onSnapshot((doc)=>{
+            setAvatar(doc.data().avatar)
+        })
           
     },[])
 
@@ -30,7 +33,7 @@ const MakeDinner = () => {
         const dinner = {type, city, name, address, date, time};
         console.log(dinner)
         
-        db.collection('diners').add({
+        if(city.length < 36 && name.length < 36 && address.length <36  ){db.collection('diners').add({
             city: city,
             address: address,
             name: name,
@@ -41,7 +44,7 @@ const MakeDinner = () => {
         .then((docRef) => {
             console.log("Document written with ID: ", docRef.id);
             db.collection('diners').doc(docRef.id).collection("dinnerMaker").add({
-                avatar: "https://www.w3schools.com/howto/img_avatar.png",
+                avatar: avatar,
                 username: currentUser
             })
 
@@ -49,7 +52,9 @@ const MakeDinner = () => {
         .catch((error) => {
             console.error("Error adding document: ", error);
         });
-        setOpenForm(false)
+        setOpenForm(false)}else{
+            alert('maksymalna ilość znaków to 35')
+        }
     }
     return ( 
         <div className="make-dinner">
@@ -65,7 +70,7 @@ const MakeDinner = () => {
                 <label htmlFor="date">Data uczty</label>
                 <input id="date" type="date" 
                 required
-                laceholder="data"
+                placeholder="data"
                 value={date} 
                 onChange={(e)=> setDate(e.target.value)}
                 
@@ -85,18 +90,21 @@ const MakeDinner = () => {
                 type="text" placeholder="Miasto" 
                 required
                 value={city} 
+                maxLength="35"
                 onChange={(e)=> setCity(e.target.value)}/>
 
                 <input className="new-dinner__input new-dinner__input--name"
                 required
                 type="text"
                 placeholder="Nazwa miejsca"
+                maxLength="35"
                 onChange={(e)=> setName(e.target.value)}/>
 
                 <input className="new-dinner__input new-dinner__input--address"
                 required
                 type="text" 
                 placeholder="Adres uczty"
+                maxLength="35"
                 onChange={(e)=> setAddress(e.target.value)}/>
 
                 <button className="primary-btn">Wyslij</button>

@@ -20,4 +20,4 @@ const storage = firebase.storage()
 
 export {db, auth, storage}
 
-// export default db;
+export default firebaseApp;

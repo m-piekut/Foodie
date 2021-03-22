@@ -1,16 +1,17 @@
 
 
-import { cleanup } from "@testing-library/react";
+
 import { useEffect, useState } from "react";
 import { useParams, withRouter } from "react-router-dom";
 import {auth, db} from '../firebase'
+import Loader from "../Loader";
+import Site404 from "../Site404";
 import StandardProfile from "./StandardProfile";
 import YourProfile from "./YourProfile";
 const ProfileSite = () => {
     const {id} = useParams()
-    const [userProfile, setUserProfile] = useState([])
-    const [isItYourProfile, setIsItYourProfile] = useState(false);
-    const [currentUser, setCurrentUser] = useState(null);
+    const [userProfile, setUserProfile] = useState('')
+    const [isItYourProfile, setIsItYourProfile] = useState();
     const [userImages, setUserImages] = useState(null)
     const [loading, setLoading] = useState(true)
     
@@ -19,33 +20,28 @@ const ProfileSite = () => {
     useEffect(() => {
         auth.onAuthStateChanged(user => {
             if (user) {
-                setCurrentUser(user.displayName)
                 if( id === auth.X){
                     setIsItYourProfile(true)
-                    console.log(isItYourProfile)
                 }else{
                     setIsItYourProfile(false)
                     console.log('czekaj')
                 }
-                } else {
-            setCurrentUser(null)
-
-                }
+                } 
             });
       db.collection("users").doc(id)
     .onSnapshot((doc) => {
       setUserProfile(doc.data())
+      setLoading(false)
     });
     db.collection('users').doc(id).collection('images').onSnapshot(snapshot=>{
         setUserImages(snapshot.docs.map(doc => ({
          id : doc.id,
          image: doc.data()
- 
          })))
         });
-        setLoading(false)
         return()=>{
-            
+            setIsItYourProfile(null)
+            setUserProfile(null)
         }
 
      },[id] );
@@ -56,10 +52,12 @@ const ProfileSite = () => {
     return ( 
         
 
-            (userProfile &&  (
+            (!loading ?
+                (userProfile ?  (
                 isItYourProfile ?  <YourProfile userProfile={userProfile}  userImages={userImages}/> : <StandardProfile userProfile={userProfile} userImages={userImages} userId={id}/>
-            )
+            ): <Site404/>
                 
+            ): <Loader/>
             )
        
     )

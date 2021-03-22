@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {db} from '../firebase'
-const Dinner = ({name, address, date,time, city, dinnerId}) => {
+const Dinner = ({searchValue, name, address, date,time, city, dinnerId}) => {
 
     const [dinnerMaker, setDinnerMaker] = useState([])
     const [invited, setInvited]  = useState([])
+    const [isContain, setIsContain]  = useState([])
 
     useEffect(()=>{
         var docRef = db.collection("diners").doc(dinnerId).collection("invited");
@@ -19,9 +20,10 @@ const Dinner = ({name, address, date,time, city, dinnerId}) => {
                avatars: doc.data(),
                 id: doc.id})))
         })
-
+        return function cleanup(){}
     },[])
     return (
+        (city.toLowerCase().search(searchValue.toLowerCase()) !=-1 )?
          <Link to={`/dinners/${dinnerId}`}>
           <div className="dinner-list__box" key={dinnerId}>
                         <div className="dinner-list__up">
@@ -53,7 +55,7 @@ const Dinner = ({name, address, date,time, city, dinnerId}) => {
                         </div>
 
                     </div>
-        </Link>
+        </Link>: false
       );
 }
  

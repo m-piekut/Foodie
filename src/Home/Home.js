@@ -6,7 +6,6 @@ const Home = () => {
         <header className="header">
             <FoodieHeader/>
             <p className="header__p">Ucztujcie razem</p>
-            <LoginButton />
         </header>
      );
 }

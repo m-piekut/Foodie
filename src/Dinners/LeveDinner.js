@@ -1,15 +1,19 @@
 import { useParams } from "react-router-dom";
-import { db } from "./firebase";
-
+import { auth, db } from "../firebase";
+import firebase from 'firebase'
 const LeaveDinner = ({id}) => {
     const dinnerId = useParams()
+    
     const leave = () => {
         db.collection('diners').doc(dinnerId.id).collection("invited").doc(id).delete().then(()=>{
             console.log('usunieto');;
         }).catch((error)=>{
             console.log(error)
         })
-        console.log(dinnerId.id)
+        db.collection('users').doc(auth.X).collection('dinners').doc(dinnerId.id).delete()
+        db.collection('users').doc(auth.X).update({
+            dinners: firebase.firestore.FieldValue.increment(-1)
+        })
     }
 
 

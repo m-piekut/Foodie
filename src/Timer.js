@@ -3,20 +3,18 @@ import { useEffect, useState } from "react";
 
 const Timer = ({date, time}) => {
 
-   const [test1, setTest1] = useState(0);
+   const [currentTime, setCurrentTime] = useState(0);
    const [test2, setTest2] = useState(0);
 
    setInterval(() => {
-      setTest1(new Date().getTime())
+      setCurrentTime(new Date().getTime())
    }, 1000);
 
-   const dinnerTime = new Date(`${date}T${time}`).getTime()
-   // let timer;
-   // let now = new Date().getTime()
-   // timer = dinnerTime - now;
+   let dinnerTime = new Date(`${date}T${time}`).getTime()
    useEffect(()=>{
-      setTest2(dinnerTime - test1)
-   },[test1])
+      setTest2(dinnerTime - currentTime)
+
+   },[currentTime])
 
     return ( 
       <div className="timer-box">

@@ -3,10 +3,10 @@ import './css/style.css'
 import './css/small.css'
 import './css/medium.css'
 import './css/large.css'
-import './css/xlarge.css'
+import './css/xlarge.css'     
 
 import Home from './Home/Home';
-import LoginSite from './LoginSite/LoginSite';
+
 import ProfileList from './ProfileSite/ProfileList';
 import ProfileSite from './ProfileSite/ProfileSite';
 import DinnersList from './Dinners/DinnersList';
@@ -16,6 +16,7 @@ import MakeDinner from './MakeDinner';
 
 import Header from './Header';
 import { useEffect } from 'react'
+import Site404 from './Site404'
 
 
 function usePageViews() {
@@ -37,6 +38,7 @@ function App() {
         <Route  exact path='/dinners'><DinnersList/></Route>
         <Route  path='/dinners/:id'><DinnerInfo/></Route>
         <Route  path='/make'><MakeDinner/></Route>
+        <Route component={Site404} />
       </Switch>
     </div>
     </Router>

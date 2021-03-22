@@ -1,20 +1,18 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { auth, db } from "../../firebase";
 
 const AddToFriends = () => {
 
     const profileId = useParams()
-    const [yourId, setYourId] = useState('')
-    const [yourInfo, setYourInfo] = useState('')
-    const [test, setTest]= useState(null)
+    const [yourInfo, setYourInfo] = useState(null)
+    const { loggedUserId} = useSelector(state => state.takeData)
     useEffect(()=>{
-        setYourId(auth.X)
-        db.collection('users').doc(auth.X).onSnapshot(doc =>{
+        db.collection('users').doc(loggedUserId).onSnapshot(doc =>{
             setYourInfo(doc.data())
         })
         return()=>{
-            console.log('odłaczono addTO friends')
         }
     },[])
 
@@ -22,8 +20,8 @@ const AddToFriends = () => {
    
 
     const addFriend = ()=>{
-        db.collection("users").doc(`${profileId.id}`).collection('invites').doc(yourId).set({
-            from: yourId,
+        db.collection("users").doc(`${profileId.id}`).collection('invites').doc(loggedUserId).set({
+            from: loggedUserId,
             username: yourInfo.username,
             avatar: yourInfo.avatar
         })
