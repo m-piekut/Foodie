@@ -1,10 +1,10 @@
-import { cleanup } from "@testing-library/react";
+
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
-import { auth, db } from "../../firebase";
+import { db } from "../../firebase";
 import DeleteFriend from "./DeleteFriend";
-import Invites from "./Invites";
+
 
 const Friends = ({isItYourProfile}) => {
     const profileId = useParams();
@@ -18,8 +18,9 @@ const Friends = ({isItYourProfile}) => {
                 friend: doc.data()
             })))     
         })
-       return cleanup()
-
+        return()=>{
+            setFriends(null)
+        }
     },[profileId])
 
 

@@ -1,6 +1,6 @@
 import { Button, Input, makeStyles, Modal } from "@material-ui/core";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 import { NavLink, useHistory } from "react-router-dom";
 import {auth, db} from './firebase'
 import { loginOut, loginUp } from "./redux/userData/userDataSlice";
@@ -39,7 +39,6 @@ const Header = () => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [user, setUser] = useState(null);
-  const {userUsername, userId, userPhotos} = useSelector(state => state.takeData)
   const dispatch = useDispatch()
 
   useEffect(()=>{
@@ -56,7 +55,7 @@ const Header = () => {
     return () => {
       usubscribe()
     }
-  },[user, username])
+  },[user, username, dispatch])
 
   const signUp = (e) =>{
     e.preventDefault();
@@ -74,6 +73,7 @@ const Header = () => {
       description: "Twój opis",
       dinners: 0,
       likes: 0,
+      friends: 0,
       quote: "twój cytat"
   })
   .then(() => {
@@ -84,7 +84,6 @@ const Header = () => {
   });
   })
   .catch((error) => {
-    var errorCode = error.code;
     var errorMessage = error.message;
     alert(errorMessage)
   });
@@ -99,7 +98,6 @@ const Header = () => {
     dispatch(loginUp())
   })
   .catch((error) => {
-    var errorCode = error.code;
     var errorMessage = error.message;
     alert(errorMessage)
   });

@@ -5,7 +5,16 @@ const Dinner = ({searchValue, name, address, date,time, city, dinnerId}) => {
 
     const [dinnerMaker, setDinnerMaker] = useState([])
     const [invited, setInvited]  = useState([])
-    const [isContain, setIsContain]  = useState([])
+    let dinnerTime = new Date(`${date}T${time}`).getTime()
+    let currentTime = new Date().getTime()
+    useEffect(()=>{
+        if(dinnerTime < currentTime){
+            db.collection('diners').doc(dinnerId).delete()
+        }
+
+    },[dinnerId, dinnerTime, currentTime])
+
+
 
     useEffect(()=>{
         var docRef = db.collection("diners").doc(dinnerId).collection("invited");
@@ -20,10 +29,18 @@ const Dinner = ({searchValue, name, address, date,time, city, dinnerId}) => {
                avatars: doc.data(),
                 id: doc.id})))
         })
-        return function cleanup(){}
-    },[])
+        return()=>{
+            setDinnerMaker(null)
+            setInvited(null)
+        }
+    },[dinnerId])
+
+    
+
+
+
     return (
-        (city.toLowerCase().search(searchValue.toLowerCase()) !=-1 )?
+        (city.toLowerCase().search(searchValue.toLowerCase()) !==-1 )?
          <Link to={`/dinners/${dinnerId}`}>
           <div className="dinner-list__box" key={dinnerId}>
                         <div className="dinner-list__up">
@@ -35,12 +52,12 @@ const Dinner = ({searchValue, name, address, date,time, city, dinnerId}) => {
                                
                                 {
                                     dinnerMaker.map(({avatars, id})=>(
-                                        <img key={id} className="avatar" src={avatars.avatar}/>
+                                        <img key={id} className="avatar" src={avatars.avatar} alt="dinner-maker-avatar"/>
                                     ))
                                 }
                                 {
                                     invited.map(({avatars, id})=>(
-                                        <img key={id} className="avatar" src={avatars.avatar}/>
+                                        <img key={id} className="avatar" src={avatars.avatar} alt="dinner-guest-avatar"/>
                                     ))
                                 }
                             </div>}

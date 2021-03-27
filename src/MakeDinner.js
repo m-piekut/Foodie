@@ -1,9 +1,9 @@
-import { Button, Modal } from "@material-ui/core"
+import { Modal } from "@material-ui/core"
 import { useEffect, useState } from "react"
+import { useSelector } from "react-redux";
 import {db, auth} from './firebase'
+import firebase from 'firebase'
 const MakeDinner = () => {
-    const currentTime = new Date();
-    const [type, setType] = useState('');
     const [city, setCity] = useState('');
     const [address, setAddress] = useState('');
     const [name, setName] = useState('');
@@ -12,6 +12,7 @@ const MakeDinner = () => {
     const [currentUser, setCurrentUser] = useState(null);
     const [avatar, setAvatar] = useState(null);
     const [openForm, setOpenForm] = useState(false)
+    const { loggedUserId} = useSelector(state => state.takeData)
     useEffect(()=>{
         auth.onAuthStateChanged(user => {
             if (user) {
@@ -23,14 +24,16 @@ const MakeDinner = () => {
           db.collection('users').doc(auth.X).onSnapshot((doc)=>{
             setAvatar(doc.data().avatar)
         })
-          
+          return()=>{
+              setAvatar(null)
+          }
     },[])
 
 
 
     const handleSubmit = (e)=>{
         e.preventDefault()
-        const dinner = {type, city, name, address, date, time};
+        const dinner = { city, name, address, date, time};
         console.log(dinner)
         
         if(city.length < 36 && name.length < 36 && address.length <36  ){db.collection('diners').add({
@@ -45,11 +48,20 @@ const MakeDinner = () => {
             console.log("Document written with ID: ", docRef.id);
             db.collection('diners').doc(docRef.id).collection("dinnerMaker").add({
                 avatar: avatar,
-                username: currentUser
+                username: currentUser,
+                id: loggedUserId
             })
-
-        })
-        .catch((error) => {
+            db.collection('users').doc(loggedUserId).collection('dinners').doc(docRef.id).set({
+                date: date,
+                name: name,
+                time: time,
+                city: city,
+                id: docRef.id
+            })
+            db.collection('users').doc(loggedUserId).update({
+                dinners: firebase.firestore.FieldValue.increment(1)
+            })
+        }).catch((error) => {
             console.error("Error adding document: ", error);
         });
         setOpenForm(false)}else{

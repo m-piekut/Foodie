@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { db } from "../firebase";
+import firebase from 'firebase'
 
-const ProfileDinners = () => {
+const ProfileDinners = ( {showDinners}) => {
 
     const {id} = useParams();
     const [dinners, setDinners] = useState(null)
@@ -19,9 +20,29 @@ const ProfileDinners = () => {
        return(()=>{
            
        })
+
+       
+       
     },[id])
+    
+    
+    useEffect(()=>{
+        if(dinners){
 
-
+            dinners.forEach((dinner)=>{
+                let dinnerTime = new Date(new Date(`${dinner.dinner.date}T${dinner.dinner.time}`).getTime())
+                let currentTime = new Date().getTime()
+                if(dinnerTime < currentTime){
+                    db.collection('users').doc(id).collection('dinners').doc(dinner.id).delete().then(
+                        db.collection('users').doc(id).update({
+                            dinners: firebase.firestore.FieldValue.increment(-1)
+                        })
+                    )
+                    
+                }
+        })
+        }
+    },[dinners, showDinners, id])
 
 
     return ( 

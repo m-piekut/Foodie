@@ -232,6 +232,10 @@ html {
   font-style: italic;
 }
 
+.user-profile__form-input {
+  max-width: 90%;
+}
+
 .user-profile__form-procentage {
   font-size: 3rem;
   color: #ffa957;
@@ -281,6 +285,20 @@ html {
   background-position-Y: 0;
   background-repeat: no-repeat;
   background-color: #FF7D00;
+}
+
+.user-profile .user-info__edit {
+  position: relative;
+}
+
+.user-profile .user-info__edit::before {
+  position: absolute;
+  right: -10px;
+  bottom: -15px;
+  z-index: 20;
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  content: "\f044";
 }
 
 .user-profile .user-info__image {
@@ -678,6 +696,10 @@ html {
   width: 90%;
   background-color: #f89a42;
   margin: 4px auto;
+}
+
+.dinner-info__user-box--maker {
+  background-color: #15616D;
 }
 
 .dinner-info__avatar {

@@ -1,4 +1,4 @@
-import { cleanup } from "@testing-library/react";
+
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { db } from "../../firebase";
@@ -16,16 +16,16 @@ const Invites = ({id}) => {
         })))      
     })
     return()=>{
-        cleanup()
+        setInvites(null)
     }
-   },[])
+   },[id])
 
 
 
     return (
         <div className="friends">
             <h3 className="friends_title">Zaproszenia</h3>
-            {(invites && invites.length !=0) ? (<div className="friends__wrapper">
+            {(invites && invites.length !==0) ? (<div className="friends__wrapper">
                 {invites.map(({id, invite})=>(
                     <div key={id} className="friends__listItem">
                         <img className="friends__avatar avatar" src={invite.avatar} alt=""/>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router";
-import { auth, db } from "../../firebase";
+import {  db } from "../../firebase";
 
 const AddToFriends = () => {
 
@@ -14,7 +14,7 @@ const AddToFriends = () => {
         })
         return()=>{
         }
-    },[])
+    },[loggedUserId])
 
 
    

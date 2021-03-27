@@ -28,6 +28,12 @@ const YourProfile = ({userProfile, userImages}) => {
         setQuote(userProfile.quote)
         setDescription(userProfile.description)
         setUserDbPath(db.collection('users').doc(id))
+
+        return()=>{
+            setQuote('')
+            setDescription(null)
+            setUserDbPath(null)
+        }
         
     },[userProfile, id])
 
@@ -58,6 +64,10 @@ const YourProfile = ({userProfile, userImages}) => {
    }
    const handleUpload = (e)=>{
        e.preventDefault()
+    var fileName = image.name;
+    var idxDot = fileName.lastIndexOf(".") + 1;
+    var extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
+    if(extFile==="jpg" || extFile==="jpeg" || extFile==="png"){
         const uploadTask = storage.ref(`${id}/avatar`).put(image)
         uploadTask.on(
             "stage_changed",
@@ -94,13 +104,16 @@ const YourProfile = ({userProfile, userImages}) => {
                 })
             }
         )
+   }else{
+       alert('To nie jest zdjęcie')
    }
+}
   
     return ( 
         <div className="user-profile">
             {/* <p className="user-profile-quote" onClick={()=>setQuoteForm(true)}>{userProfile.quote}</p> */}
             <div className="user-info">
-                <img className="user-info__image" src={userProfile.avatar} alt="" onClick={()=>setAvatarForm(true)}/>
+                <img className="user-info__image user-info__edit" src={userProfile.avatar} alt="" onClick={()=>setAvatarForm(true)}/>
                 <div className="user-info__personal">
                     <div className="user-info__personal-upper">
                     <p className="user-info__username">{userProfile.username}</p>
@@ -122,9 +135,9 @@ const YourProfile = ({userProfile, userImages}) => {
                     </div>
                 {showFriends && [<Invites key='1'  id={id} />,
                     <Friends key='2' isItYourProfile={true} /> ]}
-                    {showDinners && <ProfileDinners/>}
+                    {showDinners && <ProfileDinners showDinners = {showDinners}/>}
                     </div>
-                    <p className="user-info__personal-description" onClick={()=>setDescriptionForm(true)}>{userProfile.description}</p>
+                    <p className="user-info__personal-description user-info__edit" onClick={()=>setDescriptionForm(true)}>{userProfile.description}</p>
                 </div>
                 <AddPhotos id={id}/>
             </div>
@@ -139,14 +152,7 @@ const YourProfile = ({userProfile, userImages}) => {
                 ))}
             </div>}
         
-        
-        
-        
-        
-        
-        
-        
-        
+
         
         <Modal
             open={quoteForm}
@@ -167,10 +173,9 @@ const YourProfile = ({userProfile, userImages}) => {
                 <h3>Twóje zdjęcie</h3>
                 {/* <input type="text" value={avatar} onChange={(e)=>setAvatar(e.target.value)}/> */}
                 <progress className="user-profile__form-progress" value={[progress]} max="100"/>
-                <progress className="user-profile__form-progress" value={70} max="100"/>
-                <input className="user-profile__form-input" type="file" onChange={handleChange}/>
+                <input className="user-profile__form-input" type="file" accept="image/*" onChange={handleChange}/>
                 
-                <button onClick={handleUpload} className="primary-btn">Wyslij</button>
+                <button onClick={(e)=>handleUpload(e)} className="primary-btn">Wyslij</button>
             </form>
         </Modal>
         <Modal
@@ -179,7 +184,7 @@ const YourProfile = ({userProfile, userImages}) => {
             >
             <form className="new-dinner" onSubmit={(e)=>handleDescription(e)}>
                     <h3>Twój opis</h3>
-                    <textarea className="user-profile__form-textarea" type="text" value={description} onChange={(e)=>setDescription(e.target.value)}/>
+                    <textarea className="user-profile__form-textarea" minLength="1" maxLength="300" type="text" value={description} onChange={(e)=>setDescription(e.target.value)}/>
 
                 <button className="primary-btn">Wyslij</button>
             </form>

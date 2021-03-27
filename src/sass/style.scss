@@ -228,6 +228,9 @@ html {
         font-weight: 100;
         font-style: italic;
     }
+    &__form-input{
+        max-width: 90%;
+    }
     &__form-procentage{
         font-size: 3rem;
         color: #ffa957;
@@ -272,6 +275,17 @@ html {
         background-repeat: no-repeat;
         background-color: $orange-color;
         // background-color: $green-color;
+
+        &__edit{
+            position: relative;
+            &::before{
+                position: absolute;
+                right: -10px;
+                bottom: -15px;
+                z-index: 20;
+                font-family: "Font Awesome 5 Free"; font-weight: 900; content: "\f044";
+            }
+        }
        
         &__image{
             margin-top: 3em;
@@ -630,6 +644,9 @@ html {
         width: 90%;
         background-color: #f89a42;
         margin: 4px auto;
+        &--maker{
+            background-color: $green-color;
+        }
     }
     &__avatar{
         position: relative;

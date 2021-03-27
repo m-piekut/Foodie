@@ -1,4 +1,4 @@
-import { Button, Modal } from "@material-ui/core";
+import { Modal } from "@material-ui/core";
 import { useState } from "react";
 import { db, storage } from "../firebase";
 
@@ -15,45 +15,52 @@ const AddPhotos = ({id}) => {
     }
     const addPhoto = (e)=>{
         e.preventDefault()
+        var fileName = image.name;
+        var idxDot = fileName.lastIndexOf(".") + 1;
+        var extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
+        if(extFile==="jpg" || extFile==="jpeg" || extFile==="png"){
 
-        const uploadTask = storage.ref(`${id}/Images/${image.name}`).put(image)
-        uploadTask.on(
-            "stage_changed",
-            (snapshot) => {
-                //progress func...
-                const progress = Math.round(
-                    (snapshot.bytesTransferred / snapshot.totalBytes) *100
-                );
-                setProgress(progress)
-                if(progress == 100){
-                    setTimeout(() => {
-                        setOpenPhotoForm(false)
-                        
-                    }, 500);
+            const uploadTask = storage.ref(`${id}/Images/${image.name}`).put(image)
+            uploadTask.on(
+                "stage_changed",
+                (snapshot) => {
+                    //progress func...
+                    const progress = Math.round(
+                        (snapshot.bytesTransferred / snapshot.totalBytes) *100
+                    );
+                    setProgress(progress)
+                    if(progress === 100){
+                        setTimeout(() => {
+                            setOpenPhotoForm(false)
+                            
+                        }, 500);
+                    }
+                },
+                (error) => {
+                    //Error function
+                    console.log(error);
+                    alert(error.message)
+                },
+                ()=> {
+                    //complete function
+    
+                    storage
+                    .ref(`${id}/Images`)
+                    .child(`${image.name}`)
+                    .getDownloadURL()
+                    .then(url => {
+                        db.collection('users').doc(id).collection('images').add({
+                            image: url,
+                            name: image.name
+                        });
+                        setProgress(0);
+                        setImage(null);
+                    })
                 }
-            },
-            (error) => {
-                //Error function
-                console.log(error);
-                alert(error.message)
-            },
-            ()=> {
-                //complete function
-
-                storage
-                .ref(`${id}/Images`)
-                .child(`${image.name}`)
-                .getDownloadURL()
-                .then(url => {
-                    db.collection('users').doc(id).collection('images').add({
-                        image: url,
-                        name: image.name
-                    });
-                    setProgress(0);
-                    setImage(null);
-                })
-            }
-        )
+            )
+        }else {
+            alert('To nie jest zdjęcie')
+        }
     }
 
     return (
@@ -72,7 +79,7 @@ const AddPhotos = ({id}) => {
                 <p className="user-profile__form-procentage">{progress}%</p>
                 {/* <progress className="user-profile__form-progress" value={[70]} max="100"/> */}
                 <progress className="user-profile__form-progress" value={[progress]} max="100"/>
-                <input required className="user-profile__form-input" type="file" onChange={handleChange}/>
+                <input required className="user-profile__form-input" type="file" accept="image/*" onChange={handleChange}/>
                 
                 <button  className="primary-btn">Wyslij</button>
             </form>

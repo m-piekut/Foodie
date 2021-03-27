@@ -16,7 +16,9 @@ const StandardProfile = ({userProfile, userImages, userId}) => {
     const[alreadyFriend, setAlreadyFriend] = useState(true)
 
     useEffect(()=>{
-        if (auth.X) {db.collection('users').doc(userId).collection('invites').doc(auth.X).onSnapshot((doc)=>{
+
+        if (auth.X) {
+        db.collection('users').doc(userId).collection('invites').doc(auth.X).onSnapshot((doc)=>{
             setAlreadyInvite(doc.data())
         })
         db.collection('users').doc(userId).collection('friends').doc(auth.X).onSnapshot((doc)=>{
@@ -25,11 +27,12 @@ const StandardProfile = ({userProfile, userImages, userId}) => {
             setAlreadyFriend(false)
             setAlreadyInvite(false)
         }
-       
-        return function cleanup(){
-
+        return()=>{
+            setAlreadyFriend(null)
+            setAlreadyInvite(null)
         }
-    },[alreadyInvite, alreadyFriend])
+    },[userId])
+
 
 
     return (  
@@ -59,7 +62,7 @@ const StandardProfile = ({userProfile, userImages, userId}) => {
                         </div>
                     </div>
                     {showFriends && <Friends/>}
-                    {showDinners && <ProfileDinners/>}
+                    {showDinners && <ProfileDinners showDinners = {showDinners}/>}
                     </div>
                     <p className="user-info__personal-description">{userProfile.description}</p>
                 </div>

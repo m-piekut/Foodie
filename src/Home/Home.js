@@ -1,5 +1,4 @@
 import FoodieHeader from "../Components/FoodieHeading";
-import LoginButton from "../Components/LoginButton"
 
 const Home = () => {
     return ( 

@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
+import { useHistory } from "react-router";
+import { db } from "./firebase";
 
 
-const Timer = ({date, time}) => {
 
+const Timer = ({date, time, id}) => {
+   const history = useHistory()
    const [currentTime, setCurrentTime] = useState(0);
    const [test2, setTest2] = useState(0);
 
@@ -13,8 +16,20 @@ const Timer = ({date, time}) => {
    let dinnerTime = new Date(`${date}T${time}`).getTime()
    useEffect(()=>{
       setTest2(dinnerTime - currentTime)
+      return () => {
+         setTest2('')
+       }
+   },[currentTime, dinnerTime])
+   
 
-   },[currentTime])
+   useEffect(()=>{
+      if(test2 < 0){
+         db.collection('diners').doc(id).delete().then(()=>{
+            history.push('/dinners')
+         })
+      }
+   },[test2, id, history])
+
 
     return ( 
       <div className="timer-box">

@@ -6,19 +6,21 @@ import Timer from "../Timer";
 import firebase from 'firebase'
 import Site404 from "../Site404";
 import Loader from "../Loader";
+import { useSelector } from "react-redux";
 
 const DinnerInfo = () => {
 
     const {id} = useParams();
     const [dinner, setDinner]  = useState(null)
     const [invited, setInvited]  = useState([])
-    const [dinnerMaker, setDinnerMaker]  = useState([])
+    const [dinnerMaker, setDinnerMaker]  = useState(null)
     const [currentUser, setCurrentUser] =useState(null);
     const [currentUserId, setCurrentUserId] =useState(null);
     const [alreadyJoined, setAlreadyJoined] = useState(false)
+    const [isMaker, setIsMaker] = useState(true)
     const [avatar, setAvatar] = useState(false)
     const [loading, setLoading] = useState(true)
-
+    const { loggedUserId} = useSelector(state => state.takeData)
     const addInvited = ()=>{
             db.collection('diners').doc(id).collection("invited").add({
             avatar: avatar,
@@ -38,7 +40,6 @@ const DinnerInfo = () => {
         })
     }
 
-    
 
 
     useEffect(()=>{
@@ -82,8 +83,30 @@ docRef.get().then((doc) => {
 }).catch((error) => {
     console.log("Error getting document:", error);
 });
-    
-},[])
+    return()=>{
+        setCurrentUser(null)
+        setCurrentUserId(null)
+        setDinner(null)
+        setLoading(null)
+        setInvited(null)
+        setDinnerMaker(null)
+    }
+},[id])
+
+useEffect(()=>{
+    if(dinnerMaker){
+
+        if(dinnerMaker[0].maker.id === loggedUserId ){
+            setIsMaker(true)
+        }else{
+            setIsMaker(false)
+        }
+    }
+    return()=>{
+        setIsMaker(null)
+    }
+},[dinnerMaker, loggedUserId])
+
 useEffect(()=>{
     
     if(invited){
@@ -99,13 +122,16 @@ useEffect(()=>{
             
         }
     }
+    return()=>{
+        setAlreadyJoined(null)
+    }
 
 },[invited])
 
 
     return ( 
     (!loading ? (dinner ? <div className="dinner-info">
-        <Timer date={dinner.date} time={dinner.time}/>
+        <Timer date={dinner.date} time={dinner.time} id={id}/>
         <div className="dinner-info__mainInfo">
             <h2 className="dinner-info__city">{dinner.city}</h2>
             <p className="dinner-info__date">{dinner.date} {dinner.time}</p>
@@ -118,9 +144,9 @@ useEffect(()=>{
         {invited && <div className="dinner-info__box">
             
             {dinnerMaker.map(({maker, id}) =>(
-                <div className="dinner-info__user-box" key={id}>
+                <div className="dinner-info__user-box dinner-info__user-box--maker" key={id}>
                     <img src={maker.avatar} alt="" className="dinner-info__avatar avatar"/>
-                    <p className="dinner-info__user-name">{maker.username}</p>
+                    <p className="dinner-info__user-name"> <Link to={`/users/${maker.id}`}>{maker.username} </Link></p>
                     
                 </div>
             ))}
@@ -136,7 +162,7 @@ useEffect(()=>{
         </div>}
         {
             !currentUser ? <p>Aby dołączyć do uczty musisz się zalogować</p> :
-                (alreadyJoined ? <p>Już dołączyłeś do tej uczty</p> :
+                (alreadyJoined || isMaker ? <p>Już dołączyłeś do tej uczty</p> :
                 <button className="primary-btn" onClick={()=> addInvited()}>Dołącz</button>)
 
         

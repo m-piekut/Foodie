@@ -7,21 +7,18 @@ import './css/xlarge.css'
 
 import Home from './Home/Home';
 
-import ProfileList from './ProfileSite/ProfileList';
+
 import ProfileSite from './ProfileSite/ProfileSite';
 import DinnersList from './Dinners/DinnersList';
 import DinnerInfo from './Dinners/DinnerInfo';
-import {BrowserRouter as Router, Route, Switch, useLocation, withRouter} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch,  withRouter} from 'react-router-dom';
 import MakeDinner from './MakeDinner';
 
 import Header from './Header';
-import { useEffect } from 'react'
 import Site404 from './Site404'
 
 
-function usePageViews() {
-  let location = useLocation();
-}
+
 
 function App() {
   
@@ -33,7 +30,7 @@ function App() {
       <Header/>
       <Switch>
         <Route exact path='/'><Home/></Route>
-        <Route  exact path='/users'><ProfileList/></Route>
+
         <Route  exact path='/users/:id' component={withRouter(ProfileSite)} />
         <Route  exact path='/dinners'><DinnersList/></Route>
         <Route  path='/dinners/:id'><DinnerInfo/></Route>

@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import Join from "../Components/Join";
-import useFetch from "../Components/useFetch";
+
 import MakeDinner from "../MakeDinner";
 import {db, auth} from '../firebase'
 import Dinner from "./Dinner";
@@ -20,7 +18,6 @@ const DinnersList = () => {
   }
 
     const [dinners, setDinners] = useState([])
-    const [avatars, setAvatars] = useState([])
     const [currentUser, setCurrentUser] = useState(null);
     const [searchValue, setSearchValue] = useState('')
 
@@ -40,14 +37,18 @@ useEffect(() => {
       setCurrentUser(null)
     }
   });
+  return()=>{
+    setDinners(null)
+  }
 }, []);
+
   
     return ( 
         (dinners &&<div className="dinner-list">
             <h3 className="dinner-list__header">Lista uczt:</h3>
             <div type="text" className="dinner-list__search">
               <input className="dinner-list__search-bar" id="testing" placeholder="Miasto"  type="text" value={searchValue} onChange={(e)=> setSearchValue(e.target.value)} />
-             <button  className="dinner-list__search-icon rotateBack" onClick={()=>showBar()}><label for="testing"><i className="fas fa-search"></i></label></button>
+             <button  className="dinner-list__search-icon rotateBack" onClick={()=>showBar()}><label htmlFor="testing"><i className="fas fa-search"></i></label></button>
             </div>
             {currentUser ? <MakeDinner/>: <p>Aby utworzyć ucztę musisz się zalogować</p>}
             {
