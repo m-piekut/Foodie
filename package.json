@@ -1,6 +1,6 @@
 {
   "name": "foodie",
-  "homepage":"https://m-piekut.github.io/foodie,",
+  "homepage":"https://m-piekut.github.io/foodie",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

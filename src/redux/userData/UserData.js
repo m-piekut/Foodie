@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { auth, db } from "../../firebase";
-import { loginUp, getPhotos } from "./userDataSlice";
+import { loginUp, getAvatar } from "./userDataSlice";
 
 export function UserData(){
     const {userUsername, userId, userPhotos} = useSelector(state => state.takeData)

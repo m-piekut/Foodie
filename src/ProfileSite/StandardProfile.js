@@ -44,10 +44,10 @@ const StandardProfile = ({userProfile, userImages, userId}) => {
                     <div className="user-info__personal-upper">
                     <p className="user-info__username">{userProfile.username}</p>
                     <div className="user-info__emotes">
-                        <div className="user-info__emotes-item">
+                        {/* <div className="user-info__emotes-item">
                             <i className="far fa-grin-tongue "></i>
                             <p>{userProfile.likes}</p>
-                        </div>
+                        </div> */}
                         <div className="user-info__emotes-item user-info__emotes-item--middle"
                         onClick={()=>{setShowDinners(!showDinners); 
                             setShowFriends(false)}}>

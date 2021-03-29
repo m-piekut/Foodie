@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch} from "react-redux";
 import { NavLink, useHistory } from "react-router-dom";
 import {auth, db} from './firebase'
-import { loginOut, loginUp } from "./redux/userData/userDataSlice";
+import { loginOut, loginUp, getAvatar } from "./redux/userData/userDataSlice";
 function getModalStyle() {
     const top = 50;
     const left = 50;
@@ -39,6 +39,7 @@ const Header = () => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [user, setUser] = useState(null);
+  const [loggedAvatar, setLoggedAvatar] = useState(null);
   const dispatch = useDispatch()
 
   useEffect(()=>{
@@ -47,9 +48,13 @@ const Header = () => {
         //user loged in
         setUser(authUser)
         dispatch(loginUp())
+        db.collection('users').doc(auth.X).onSnapshot(doc=>{
+          dispatch(getAvatar(doc.data().avatar))
+        })
       }else{
         setUser(null);
         dispatch(loginOut())
+        getAvatar(null)
       }
     })
     return () => {

@@ -89,7 +89,7 @@ html {
 }
 .header {
     position: relative;
-    height: 100vh;
+    height: calc(100vh - 32px);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -219,10 +219,10 @@ html {
     display: flex;
     flex-direction: column;
     align-items: center;
-   
+    height: calc(100vh - 32px);
     
     width: 100vw;
-    height: 100vh;
+
     &-quote{
         font-size: 2rem;
         font-weight: 100;
@@ -268,6 +268,7 @@ html {
         flex-direction: column;
         align-items: center;
         width: 100%;
+        height: 100%;
         max-width: 450px;
         background-image: url('../img/Vector.svg');
         background-size: 100% auto ;
@@ -276,11 +277,13 @@ html {
         background-color: $orange-color;
         // background-color: $green-color;
 
+        
         &__edit{
             position: relative;
+            cursor: pointer;
             &::before{
                 position: absolute;
-                right: -10px;
+                right: 0;
                 bottom: -15px;
                 z-index: 20;
                 font-family: "Font Awesome 5 Free"; font-weight: 900; content: "\f044";
@@ -306,6 +309,7 @@ html {
             flex-direction: column;
             align-items: center;
             width: 100%;
+
             &-upper{
                 font-size: 1.4rem;
                 width: 100%;
@@ -341,6 +345,7 @@ html {
         &__emotes{
             position: relative;
             display: flex;
+            text-align: center;
             justify-content: space-around;
             width: 90%;
             color: white;
@@ -348,6 +353,8 @@ html {
             &::after{
                 content: "";
                 position: absolute;
+                left: 0;
+                right: 0;
                 bottom: -10px;
                 background: transparent;
                 width: 100%;
@@ -365,11 +372,11 @@ html {
                 p{
                     margin-left: 5px;
                 }
-                &--middle{
-                    padding: 0 30px;
-                    border-right: 2px solid rgba(255, 252, 250, 0.712);
-                    border-left: 2px solid rgba(255, 252, 250, 0.712);
-                }
+                // &--middle{
+                // //     padding: 0 30px;
+                //     border-right: 2px solid rgba(255, 252, 250, 0.712);
+                // //     border-left: 2px solid rgba(255, 252, 250, 0.712);
+                // }
             }
         }
     }

@@ -21,15 +21,15 @@ $green-color: #15616D;
         align-items: flex-start;
         justify-content: center;
         position: relative;
-        height: 100%;
-        max-width: 98vw;
+        // height: 100%;
+        // max-width: 98vw;
 
         .user-info {
 
             position: sticky;
             top: 0;
             transform: translate(-5%);
-            height: 100vh;
+            // height: 100vh;
             background-image: none;
             background-color: $orange-color;
 
@@ -63,6 +63,12 @@ $green-color: #15616D;
                     text-align: right;
                     line-height: 130%;
                 }
+            }
+            &__emotes{
+                position: relative;
+                width: 70%;
+                left: 10%;
+                text-align: right;
             }
             &__image{
                 position: relative;

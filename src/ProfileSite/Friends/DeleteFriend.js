@@ -8,6 +8,14 @@ const DeleteFriend = ({from, profileId}) => {
             db.collection('users').doc(profileId).update({
                 friends: firebase.firestore.FieldValue.increment(-1)
             })
+            
+        })
+        db.collection('users').doc(from).collection('friends').doc(profileId).delete().then(()=>{
+            alert('usunięto znajomego')
+            db.collection('users').doc(from).update({
+                friends: firebase.firestore.FieldValue.increment(-1)
+            })
+
         })
     }
 

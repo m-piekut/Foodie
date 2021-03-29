@@ -28,7 +28,7 @@ const Friends = ({isItYourProfile}) => {
     return ( 
         <div className="friends">
             {friends && <div className="friends__wrapper">
-            <h3 className="friends__title">Obserwujący</h3>
+            <h3 className="friends__title">Znajomi</h3>
                 {friends.map(({id, friend})=>(
                     <div key={id} className="friends__listItem">
                         <img className="friends__avatar avatar" src={friend.avatar} alt=""/>

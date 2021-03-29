@@ -8,7 +8,7 @@ export const userDataSlice = createSlice({
     initialState: {
         loggedUserId: '',
         loggedUserUsername: '',
-        loggedUserPhotos: 2,
+        loggedAvatar: '',
     },
     reducers: {
         loginUp: state =>{
@@ -20,13 +20,13 @@ export const userDataSlice = createSlice({
             state.loggedUserId = ''
             state.loggedUserUsername = ''
         },
-        getPhotos: (state, action)=>{
-            state.loggedUserPhotos = action.payload
+        getAvatar: (state, action)=>{
+            state.loggedAvatar = action.payload
         }
 
 
 
 }})
 
-export const {loginUp, loginOut, getPhotos} = userDataSlice.actions
+export const {loginUp, loginOut, getAvatar} = userDataSlice.actions
 export default userDataSlice.reducer

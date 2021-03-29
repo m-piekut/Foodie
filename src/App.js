@@ -30,6 +30,7 @@ function App() {
       <Header/>
       <Switch>
         <Route exact path='/'><Home/></Route>
+        <Route exact path='/foodie'><Home/></Route>
 
         <Route  exact path='/users/:id' component={withRouter(ProfileSite)} />
         <Route  exact path='/dinners'><DinnersList/></Route>
