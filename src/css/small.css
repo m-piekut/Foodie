@@ -67,7 +67,6 @@
   .user-profile__images-box {
     margin-top: 30px;
     background: none;
-    min-height: 100%;
   }
   .user-profile__image:first-child {
     margin-top: 30px;
