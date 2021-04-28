@@ -24,7 +24,6 @@ const ProfileSite = () => {
                     setIsItYourProfile(true)
                 }else{
                     setIsItYourProfile(false)
-                    console.log('czekaj')
                 }
                 } 
             });
@@ -45,7 +44,19 @@ const ProfileSite = () => {
         }
 
      },[id] );
-    
+    useEffect(()=>{
+
+         if(
+            userProfile=== null || userProfile=== undefined
+        ){
+            setUserProfile(false)
+            setLoading(true)
+        } else if(userProfile){
+            setLoading(false)
+        }
+
+
+    },[userProfile, id])
     
 
 
@@ -54,7 +65,7 @@ const ProfileSite = () => {
 
             (!loading ?
                 (userProfile ?  (
-                isItYourProfile ?  <YourProfile userProfile={userProfile}  userImages={userImages}/> : <StandardProfile userProfile={userProfile} userImages={userImages} userId={id}/>
+                isItYourProfile ?  <YourProfile userProfile={userProfile}  userImages={userImages}/> : <StandardProfile userProfile={userProfile}  userImages={userImages} userId={id}/>
             ): <Site404/>
                 
             ): <Loader/>

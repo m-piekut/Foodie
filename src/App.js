@@ -11,7 +11,7 @@ import Home from './Home/Home';
 import ProfileSite from './ProfileSite/ProfileSite';
 import DinnersList from './Dinners/DinnersList';
 import DinnerInfo from './Dinners/DinnerInfo';
-import {BrowserRouter as Router, Route, Switch,  withRouter} from 'react-router-dom';
+import { HashRouter, Route, Switch,  withRouter} from 'react-router-dom';
 import MakeDinner from './MakeDinner';
 
 import Header from './Header';
@@ -25,7 +25,7 @@ function App() {
 
 
   return (
-    <Router>
+    <HashRouter>
     <div className="App">
       <Header/>
       <Switch>
@@ -39,7 +39,7 @@ function App() {
         <Route component={Site404} />
       </Switch>
     </div>
-    </Router>
+    </HashRouter>
   );
 }
 
