@@ -119,7 +119,7 @@ const logout = (e) => {
 }
     return ( 
         <div className="signup">
-            {user&& <p>{user.displayName}</p>}
+            {/* {user && <p>{user.displayName}</p>} */}
     <Modal className="modal"
         open={open}
         onClose={()=> setOpen(false)}
